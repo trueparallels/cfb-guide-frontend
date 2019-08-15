@@ -1,9 +1,10 @@
 import React from "react"
-import { Link, useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import GameWeek from "../components/gameweek"
+import Game from "../components/game"
 
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
@@ -26,6 +27,32 @@ const IndexPage = () => {
                 homeAbbreviation
                 visitorAbbreviation
                 isNeutralSite
+                homeTeam {
+                  id
+                  abbreviation
+                  alternateColor
+                  color
+                  displayName
+                  location
+                  name
+                  conference {
+                    id
+                    name
+                  }
+                }
+                visitorTeam {
+                  id
+                  abbreviation
+                  alternateColor
+                  color
+                  displayName
+                  location
+                  name
+                  conference {
+                    id
+                    name
+                  }
+                }
               }
             }
           }
@@ -48,14 +75,8 @@ const IndexPage = () => {
           <GameWeek key={data.fieldValue} week={weekNumber(data.fieldValue)}>
             {
               data.edges.map(({node: game}) => {
-                const { gameId, date, home, visitor, homeAbbreviation, visitorAbbreviation, isNeutralSite } = game.context;
-
                 return (
-                  <li key={gameId}>
-                    <Link to={game.path}>
-                    {`${visitor} (${visitorAbbreviation}) ${isNeutralSite ? 'vs.' : 'at'} ${home} (${homeAbbreviation}) - ${date ? date : 'TBD'}`}
-                    </Link>
-                  </li>
+                  <Game key={game.context.gameId} pageContext={game.context} path={game.path} />
                 );
               })
             }

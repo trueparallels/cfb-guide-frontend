@@ -5,7 +5,7 @@ import React from "react"
 const Header = ({ siteTitle }) => (
   <header className="bg-gray-500 px-4 py-4">
     <div>
-      <h1 className="text-3xl font-semibold">
+      <h1 className="text-3xl font-semibold hidden">
         <Link
           to="/"
         >

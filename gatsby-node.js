@@ -15,6 +15,32 @@ exports.createPages = async ({actions, graphql}) => {
           homeAbbreviation
           visitorAbbreviation
           isNeutralSite
+          homeTeam {
+            id
+            abbreviation
+            alternateColor
+            color
+            displayName
+            location
+            name
+            conference {
+              id
+              name
+            }
+          }
+          visitorTeam {
+            id
+            abbreviation
+            alternateColor
+            color
+            displayName
+            location
+            name
+            conference {
+              id
+              name
+            }
+          }
         }
       }
     }

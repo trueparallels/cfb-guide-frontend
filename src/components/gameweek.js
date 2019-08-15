@@ -5,7 +5,7 @@ const GameWeek = (props) => {
 
   return (
     <div>
-      <h3 class="text-2xl font-semibold">{ `Week ${week}` }</h3>
+      <h3 className="text-2xl font-semibold">{ `Week ${week}` }</h3>
       <ul>
         { children }
       </ul>
