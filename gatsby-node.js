@@ -10,8 +10,11 @@ exports.createPages = async ({actions, graphql}) => {
           gameId
           gameWeekYear
           date
+          home
+          visitor
           homeAbbreviation
           visitorAbbreviation
+          isNeutralSite
         }
       }
     }
@@ -24,6 +27,10 @@ exports.createPages = async ({actions, graphql}) => {
     R.map(weekQuery)(weeks)
   )
 
+  const getGameYear = R.pipe(R.split('-'), R.nth(0));
+  const getGameWeek = R.pipe(R.split('-'), R.nth(1));
+  const padGameWeek = R.ifElse(x => Number(getGameWeek(x)) < 10, x => R.concat('week-0', getGameWeek(x)), x => R.concat('week-', getGameWeek(x)));
+
   return allWeeks.then((data) => {
     data.forEach(item => {
       console.log(item.data.cfbApi.byWeek)
@@ -34,7 +41,7 @@ exports.createPages = async ({actions, graphql}) => {
         }
 
         actions.createPage({
-          path: `/week-${game.gameWeekYear}/${game.gameId}`,
+          path: `/${getGameYear(game.gameWeekYear)}/${padGameWeek(game.gameWeekYear)}/${game.gameId}`,
           component: path.resolve('src/components/game.js'),
           context
         })

@@ -2,47 +2,66 @@ import React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 
 import Layout from "../components/layout"
-import Image from "../components/image"
 import SEO from "../components/seo"
+import GameWeek from "../components/gameweek"
 
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
     query GamesQuery {
-      allSitePage(filter: {path: {regex: "/week-.*/"}}) {
-        nodes {
-          id
-          path
-          context {
-            gameId
-            gameWeekYear
-            date
-            homeAbbreviation
-            visitorAbbreviation
+      allSitePage(sort:{
+        fields: [context___gameWeekYear, context___date],
+        order: [ASC, ASC]
+      }) {
+        group(field: context___gameWeekYear) {
+          fieldValue
+          edges {
+            node {
+              path
+              context {
+                gameId
+                gameWeekYear
+                date
+                home
+                visitor
+                homeAbbreviation
+                visitorAbbreviation
+                isNeutralSite
+              }
+            }
           }
         }
       }
     }
   `);
 
+  const weekData = data.allSitePage.group;
+  const weekNumber = x => (Number(x.split('-')[1]));
+  weekData.sort((a, b) => {
+    return weekNumber(a.fieldValue) - weekNumber(b.fieldValue)
+  });
+
   return (
     <Layout>
-      <SEO title="Home" />
-      <h1>Hi people</h1>
-      <p>Welcome to your new Gatsby site.</p>
-      <p>Now go build something great.</p>
-      <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-        <Image />
-      </div>
-      <Link to="/page-2/">Go to page 2</Link>
-      <ul>
-        {
-          data.allSitePage.nodes.map((game) => (
-            <li key={game.context.gameId}>
-              <Link to={game.path}>{`${game.context.gameWeekYear}: ${game.context.visitorAbbreviation} vs. ${game.context.homeAbbreviation}`}</Link>
-            </li>
-          ))
-        }
-      </ul>
+      <SEO title="CFB Guide" />
+      {
+        weekData.map((data) => (
+          <GameWeek key={data.fieldValue} week={weekNumber(data.fieldValue)}>
+            {
+              data.edges.map(({node: game}) => {
+                const { gameId, date, home, visitor, homeAbbreviation, visitorAbbreviation, isNeutralSite } = game.context;
+
+                return (
+                  <li key={gameId}>
+                    <Link to={game.path}>
+                    {`${visitor} (${visitorAbbreviation}) ${isNeutralSite ? 'vs.' : 'at'} ${home} (${homeAbbreviation}) - ${date ? date : 'TBD'}`}
+                    </Link>
+                  </li>
+                );
+              })
+            }
+          </GameWeek>
+        ))
+      }
     </Layout>
   )
 }

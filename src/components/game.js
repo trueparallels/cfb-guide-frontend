@@ -5,7 +5,7 @@ const Game = ({path, pageContext}) => {
     <div>
       <ul>
         { Object.keys(pageContext).map((key, idx) => (
-          <li>{ key }: { pageContext[key] }</li>
+          <li key={key}>{ key }: { pageContext[key] }</li>
         ))}
       </ul>
     </div>
