@@ -5,8 +5,10 @@ const GameWeek = (props) => {
 
   return (
     <div>
-      <h3>{ `Week ${week}` }</h3>
-      { children }
+      <h3 class="text-2xl font-semibold">{ `Week ${week}` }</h3>
+      <ul>
+        { children }
+      </ul>
     </div>
   );
 };
