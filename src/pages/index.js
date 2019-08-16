@@ -71,6 +71,19 @@ const IndexPage = () => {
     <Layout>
       <SEO title="CFB Guide" />
       {
+        (
+          <ul>
+            {
+              weekData.map((data) => (
+                <li className="inline mr-2" key={data.fieldValue}>
+                  <a href={`#week-${data.fieldValue.replace('2019-', '')}`}>{ `Week ${data.fieldValue.replace('2019-', '')}` }</a>
+                </li>
+              ))
+            }
+          </ul>
+        )
+      }
+      {
         weekData.map((data) => (
           <GameWeek key={data.fieldValue} week={weekNumber(data.fieldValue)}>
             {

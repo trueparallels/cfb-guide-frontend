@@ -5,11 +5,11 @@ import React from "react"
 const Header = ({ siteTitle }) => (
   <header className="bg-gray-500 px-4 py-4">
     <div>
-      <h1 className="text-3xl font-semibold hidden">
+      <h1 className="text-3xl font-semibold">
         <Link
           to="/"
         >
-          {siteTitle}
+          {`${siteTitle} 🏈`}
         </Link>
       </h1>
     </div>

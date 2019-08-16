@@ -59,11 +59,24 @@ exports.createPages = async ({actions, graphql}) => {
 
   return allWeeks.then((data) => {
     data.forEach(item => {
-      console.log(item.data.cfbApi.byWeek)
+      // console.log(item.data.cfbApi.byWeek)
+      const gamesByWeek = item.data.cfbApi.byWeek
+
+      actions.createPage({
+        path: `/${getGameYear(gamesByWeek[0].gameWeekYear)}/${padGameWeek(gamesByWeek[0].gameWeekYear)}`,
+        component: path.resolve('src/components/GameWeekPage.js'),
+        context: {
+          games: gamesByWeek,
+          contentType: 'week',
+          week: getGameWeek(gamesByWeek[0].gameWeekYear)
+        }
+      });
 
       item.data.cfbApi.byWeek.forEach((game) => {
         const context = {
-          ...game
+          ...game,
+          contentType: 'game',
+          week: getGameWeek(game.gameWeekYear)
         }
 
         actions.createPage({
