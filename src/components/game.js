@@ -38,9 +38,9 @@ const Game = ({path, pageContext}) => {
         <div style={ {backgroundColor: hexColor(homeTeam.alternateColor), height: '20px', width: '50%'}}></div>
       </div>
       <div className="border border-gray-500 px-2 py-4 flex items-center justify-between">
-        <div className="text-center">
+        <div className="flex flex-col align-center">
           { visitorImage }
-          <span className="text-sm font-semibold">{visitorAbbreviation}</span>
+          <span className="text-sm font-semibold text-center">{visitorAbbreviation}</span>
         </div>
         <div className="flex flex-col">
           <Link to={path}>
@@ -50,9 +50,9 @@ const Game = ({path, pageContext}) => {
             <div className="text-center">{ isConferenceGame(visitorTeam, homeTeam) ? 'Conference' : 'Non-Con' }</div>
           </Link>
         </div>
-        <div className="text-center">
+        <div className="flex flex-col align-center">
           { homeImage }
-          <span className="text-sm font-semibold">{homeAbbreviation}</span>
+          <span className="text-sm font-semibold text-center">{homeAbbreviation}</span>
         </div>
       </div>
     </li>
