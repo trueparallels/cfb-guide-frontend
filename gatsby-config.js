@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `CFB Guide`,
+    title: `CFB TV Guide`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
   },
@@ -34,6 +34,7 @@ module.exports = {
         typeName: `CFB_API`,
         fieldName: `cfbApi`,
         url: `http://localhost:3003/graphql`,
+        refetchInterval: 60
       }
     }
     // this (optional) plugin enables Progressive Web App + Offline functionality

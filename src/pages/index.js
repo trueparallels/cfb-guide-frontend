@@ -24,6 +24,7 @@ const IndexPage = () => {
                 gameId
                 gameWeekYear
                 date
+                network
                 home
                 visitor
                 homeAbbreviation
@@ -72,19 +73,6 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="CFB Guide" />
-      {
-        (
-          <select>
-            {
-              weekData.map((data) => (
-                <option key={data.fieldValue} value={data.fieldValue}>
-                  Week {data.fieldValue.replace('2019-', '')}
-                </option>
-              ))
-            }
-          </select>
-        )
-      }
       {
         weekData.map((data) => (
           <GameWeek key={data.fieldValue} week={weekNumber(data.fieldValue)}>

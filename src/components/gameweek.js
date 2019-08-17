@@ -6,7 +6,7 @@ const GameWeek = (props) => {
   return (
     <div className="max-w-5xl mx-auto my-6">
       <a href={`week-${week}`} name={`week-${week}`}>
-        <h3 className="text-2xl font-semibold">{ `Week ${week}` }</h3>
+        <h2 className="font-raleway text-3xl">{ `Week ${week}` }</h2>
       </a>
       <ul>
         { children }

@@ -7,10 +7,8 @@ import Game from "./game";
 
 const GameWeekPage = (props) => {
   const { path, pageContext, data } = props;
-  console.log(props)
   const { week } = pageContext;
   const { edges: games } = data.allSitePage;
-  // console.log(games)
 
   return (
     <Layout>
@@ -46,6 +44,7 @@ query GameWeekQuery($gameWeekYear: String) {
           gameId
           gameWeekYear
           date
+          network
           home
           visitor
           homeAbbreviation

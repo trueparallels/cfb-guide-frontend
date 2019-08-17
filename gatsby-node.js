@@ -10,6 +10,7 @@ exports.createPages = async ({actions, graphql}) => {
           gameId
           gameWeekYear
           date
+          network
           home
           visitor
           homeAbbreviation

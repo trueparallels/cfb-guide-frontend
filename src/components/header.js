@@ -3,13 +3,13 @@ import PropTypes from "prop-types"
 import React from "react"
 
 const Header = ({ siteTitle }) => (
-  <header className="bg-gray-500 px-4 py-4">
-    <div>
-      <h1 className="text-3xl font-semibold">
+  <header className="bg-green-600 px-4 py-4">
+    <div className="text-center">
+      <h1 className="font-raleway text-5xl font-semibold text-orange-800">
         <Link
           to="/"
         >
-          {`${siteTitle} 🏈`}
+          {`🏈 ${siteTitle} 🏈`}
         </Link>
       </h1>
     </div>
