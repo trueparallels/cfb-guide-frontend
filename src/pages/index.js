@@ -12,6 +12,8 @@ const IndexPage = () => {
       allSitePage(sort:{
         fields: [context___gameWeekYear, context___date],
         order: [ASC, ASC]
+      }, filter: {
+        context: { gameId: { ne: null }}
       }) {
         group(field: context___gameWeekYear) {
           fieldValue
@@ -72,15 +74,15 @@ const IndexPage = () => {
       <SEO title="CFB Guide" />
       {
         (
-          <ul>
+          <select>
             {
               weekData.map((data) => (
-                <li className="inline mr-2" key={data.fieldValue}>
-                  <a href={`#week-${data.fieldValue.replace('2019-', '')}`}>{ `Week ${data.fieldValue.replace('2019-', '')}` }</a>
-                </li>
+                <option key={data.fieldValue} value={data.fieldValue}>
+                  Week {data.fieldValue.replace('2019-', '')}
+                </option>
               ))
             }
-          </ul>
+          </select>
         )
       }
       {
@@ -89,7 +91,9 @@ const IndexPage = () => {
             {
               data.edges.map(({node: game}) => {
                 return (
-                  <Game key={game.context.gameId} pageContext={game.context} path={game.path} />
+                  <div key={game.context.gameId} className="my-4">
+                    <Game pageContext={game.context} path={game.path} />
+                  </div>
                 );
               })
             }
