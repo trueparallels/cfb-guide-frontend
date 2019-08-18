@@ -32,6 +32,11 @@ module.exports = {
         '"Courier New"',
         'monospace',
       ],
+    },
+    minWidth: {
+      '0': '0',
+      full: '100%',
+      '40': '10rem',
     }
   },
   variants: {},

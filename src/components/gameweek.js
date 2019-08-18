@@ -22,7 +22,7 @@ const GameWeek = (props) => {
   return (
     <div className="max-w-5xl mx-auto my-6">
       <a href={`${weekYearHref}`} name={`week-${week}`}>
-        <h2 className="font-raleway text-3xl">{ `Week ${week}` }</h2>
+        <h2 className="font-raleway text-2xl md:text-3xl">{ `Week ${week}` }</h2>
       </a>
       {
         filteredGamesForWeek.length === 0 &&

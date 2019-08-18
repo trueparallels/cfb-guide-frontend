@@ -3,9 +3,9 @@ import PropTypes from "prop-types"
 import React from "react"
 
 const Header = ({ siteTitle }) => (
-  <header className="bg-green-600 px-4 py-4">
+  <header className="bg-white px-4 py-4 border-b border-green-600">
     <div className="text-center">
-      <h1 className="font-raleway text-5xl font-semibold text-orange-800">
+      <h1 className="font-raleway text-3xl md:text-5xl font-semibold text-green-600">
         <Link
           to="/"
         >
