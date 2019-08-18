@@ -23,10 +23,11 @@ const Game = ({path, pageContext}) => {
 
   const visitorImage = visitorTeam && (<img src={`https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/${visitorTeam.id}.png&h=80`} alt={visitorTeam.location}/>)
   const homeImage = homeTeam && (<img src={`https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/${homeTeam.id}.png&h=80`} alt={homeTeam.location}/>)
+  const placeholderTeamImage = (<img src="http://placehold.it/80x80" />)
+  
   const gameDateAndTime = date ? formatGameDate(new Date(date)) : 'TBD'
   const [gameDayOfWeek, gameDate, gameTime] = gameDateAndTime.split(', ')
 
-  // const placeholderTeamImage = (<img src="http://placehold.it/50x50" />)
   const hexColor = (colorCode) => `#${colorCode}`
 
   return (
@@ -38,7 +39,7 @@ const Game = ({path, pageContext}) => {
       
       <div className="border border-gray-500 px-2 py-4 flex items-center justify-between">
         <div className="flex flex-col align-center">
-          { visitorImage }
+          { visitorImage || placeholderTeamImage }
           <span className="text-sm font-semibold text-center">{visitorAbbreviation}</span>
         </div>
         <div className="flex flex-col">
@@ -52,7 +53,7 @@ const Game = ({path, pageContext}) => {
           </Link>
         </div>
         <div className="flex flex-col align-center">
-          { homeImage }
+          { homeImage || placeholderTeamImage }
           <span className="text-sm font-semibold text-center">{homeAbbreviation}</span>
         </div>
       </div>
