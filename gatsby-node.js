@@ -48,7 +48,36 @@ exports.createPages = async ({actions, graphql}) => {
     `)
   }
 
+  const conferenceQuery = async () => {
+    return await graphql(`
+      {
+        cfbApi {
+          conference {
+            id
+            name
+          }
+        }
+      }
+    `);
+  }
+
+  const networkQuery = async () => {
+    return await graphql(`
+      {
+        cfbApi {
+          networks {
+            name
+          }
+        }
+      }
+    `);
+  };
+
   const weeks = R.range(1,15)
+  const networksData = await networkQuery()
+  console.log(networksData)
+  const networks = networksData.data.cfbApi.networks.map(n => n.name)
+  console.log(networks)
 
   const allWeeks = Promise.all(
     R.map(weekQuery)(weeks)
@@ -71,7 +100,8 @@ exports.createPages = async ({actions, graphql}) => {
           //games: gamesByWeek,
           contentType: 'week',
           week: getGameWeek(gamesByWeek[0].gameWeekYear),
-          gameWeekYear: gamesByWeek[0].gameWeekYear
+          gameWeekYear: gamesByWeek[0].gameWeekYear,
+          networks
         }
       });
 
@@ -79,7 +109,8 @@ exports.createPages = async ({actions, graphql}) => {
         const context = {
           ...game,
           contentType: 'game',
-          week: getGameWeek(game.gameWeekYear)
+          week: getGameWeek(game.gameWeekYear),
+          networks
         }
 
         actions.createPage({

@@ -1,14 +1,19 @@
-import React from "react"
+import React, { useState } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Layout from "../components/layout"
+import Filters from "../components/filters"
 import SEO from "../components/seo"
 import GameWeek from "../components/gameweek"
-import Game from "../components/game"
 
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
     query GamesQuery {
+      cfbApi {
+        networks {
+          name
+        }
+      }
       allSitePage(sort:{
         fields: [context___gameWeekYear, context___date],
         order: [ASC, ASC]
@@ -64,28 +69,29 @@ const IndexPage = () => {
     }
   `);
 
+  const [selectedNetwork, setSelectedNetwork] = useState('-- All --');
+
   const weekData = data.allSitePage.group;
   const weekNumber = x => (Number(x.split('-')[1]));
   weekData.sort((a, b) => {
     return weekNumber(a.fieldValue) - weekNumber(b.fieldValue)
   });
 
+  const networks = data.cfbApi.networks.map(n => n.name).sort();
+
   return (
     <Layout>
       <SEO title="CFB Guide" />
+      <Filters filterData={weekData} networks={networks} setNetwork={setSelectedNetwork} />
       {
-        weekData.map((data) => (
-          <GameWeek key={data.fieldValue} week={weekNumber(data.fieldValue)}>
-            {
-              data.edges.map(({node: game}) => {
-                return (
-                  <div key={game.context.gameId} className="my-4">
-                    <Game pageContext={game.context} path={game.path} />
-                  </div>
-                );
-              })
-            }
-          </GameWeek>
+        weekData.map(({fieldValue, edges: gamesForWeek}) => (
+          <GameWeek
+            key={fieldValue}
+            gamesForWeek={gamesForWeek}
+            filters={ { selectedNetwork } }
+            week={weekNumber(fieldValue)}
+            weekYear={fieldValue}
+          />
         ))
       }
     </Layout>
