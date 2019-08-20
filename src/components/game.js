@@ -31,33 +31,33 @@ const Game = ({path, pageContext}) => {
   const hexColor = (colorCode) => `#${colorCode}`
 
   return (
-    <li key={gameId}>
-      <div className="flex">
-        <div style={ {backgroundColor: hexColor(visitorTeam.color), height: '20px', width: '50%'}}></div>
-        <div style={ {backgroundColor: hexColor(homeTeam.color), height: '20px', width: '50%'}}></div>
+    <div className="flex">
+      <div style={ {backgroundColor: hexColor(visitorTeam.color), height: '20px', width: '50%'}}></div>
+      <div style={ {backgroundColor: hexColor(homeTeam.color), height: '20px', width: '50%'}}></div>
+    </div>
+    
+    <div className="border border-gray-500 px-2 py-4 flex items-center justify-around sm:justify-between flex-wrap sm:flex-no-wrap">
+      <div className="flex flex-col align-center order-none sm:order-first">
+        { //visitorImage || 
+        placeholderTeamImage }
+        <span className="text-sm font-semibold text-center">{visitorAbbreviation}</span>
       </div>
-      
-      <div className="border border-gray-500 px-2 py-4 flex items-center justify-around sm:justify-between flex-wrap sm:flex-no-wrap">
-        <div className="flex flex-col align-center order-none sm:order-first">
-          { visitorImage || placeholderTeamImage }
-          <span className="text-sm font-semibold text-center">{visitorAbbreviation}</span>
-        </div>
-        <div className="flex flex-col align-center order-none sm:order-last">
-          { homeImage || placeholderTeamImage }
-          <span className="text-sm font-semibold text-center">{homeAbbreviation}</span>
-        </div>
-        <div className="flex flex-col min-w-full sm:min-w-40">
-          <Link to={path}>
-            <div className="text-center text-base sm:text-xl mb-3 font-raleway">{`${visitor} ${isNeutralSite ? 'vs.' : 'at'} ${home}`}</div>
-            <div className="text-center text-sm sm:text-lg font-raleway font-extrabold">{ gameTime }</div>
-            <div className="text-center text-sm sm:text-base">{ `${gameDayOfWeek} ${gameDate ? gameDate : ''}` }</div>
-            <div className="text-center text-base sm:text-xl font-raleway">{ network }</div>
-            <div className="text-center text-sm sm:text-base">{ `${getTeamConferenceName(visitorTeam)} vs. ${getTeamConferenceName(homeTeam)}` }</div>
-            <div className="text-center text-sm sm:text-base">{ isConferenceGame(visitorTeam, homeTeam) ? 'Conference' : 'Non-Con' }</div>
-          </Link>
-        </div>
+      <div className="flex flex-col align-center order-none sm:order-last">
+        { //homeImage || 
+          placeholderTeamImage }
+        <span className="text-sm font-semibold text-center">{homeAbbreviation}</span>
       </div>
-    </li>
+      <div className="flex flex-col min-w-full sm:min-w-40">
+        <Link to={path}>
+          <div className="text-center text-base sm:text-xl mb-3 font-raleway">{`${visitor} ${isNeutralSite ? 'vs.' : 'at'} ${home}`}</div>
+          <div className="text-center text-sm sm:text-lg font-raleway font-extrabold">{ gameTime }</div>
+          <div className="text-center text-sm sm:text-base">{ `${gameDayOfWeek} ${gameDate ? gameDate : ''}` }</div>
+          <div className="text-center text-base sm:text-xl font-raleway">{ network }</div>
+          <div className="text-center text-sm sm:text-base">{ `${getTeamConferenceName(visitorTeam)} vs. ${getTeamConferenceName(homeTeam)}` }</div>
+          <div className="text-center text-sm sm:text-base">{ isConferenceGame(visitorTeam, homeTeam) ? 'Conference' : 'Non-Con' }</div>
+        </Link>
+      </div>
+    </div>
   )
 };
 
