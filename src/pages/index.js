@@ -1,10 +1,13 @@
 import React, { useState } from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import { reject, prepend } from 'ramda'
 
 import Layout from "../components/layout"
 import Filters from "../components/filters"
 import SEO from "../components/seo"
 import GameWeek from "../components/gameweek"
+
+import { isFCSTeam, sortTeamsByName } from '../utils/team-utils'
 
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
@@ -12,6 +15,13 @@ const IndexPage = () => {
       cfbApi {
         networks {
           name
+        }
+        teams {
+          id
+          displayName
+          conference {
+            name
+          }
         }
       }
       allSitePage(sort:{
@@ -70,6 +80,8 @@ const IndexPage = () => {
   `);
 
   const [selectedNetwork, setSelectedNetwork] = useState('-- All --');
+  const [confGamesOnly, setConfGamesOnly] = useState(false);
+  const [selectedTeam, setSelectedTeam] = useState(null);
 
   const weekData = data.allSitePage.group;
   const weekNumber = x => (Number(x.split('-')[1]));
@@ -78,17 +90,24 @@ const IndexPage = () => {
   });
 
   const networks = data.cfbApi.networks.map(n => n.name).sort();
+  const fbsTeams = prepend({ id: null, displayName: '-- All Teams --'}, sortTeamsByName(reject(isFCSTeam, data.cfbApi.teams)));
 
   return (
     <Layout>
       <SEO title="CFB Guide" />
-      <Filters filterData={weekData} networks={networks} setNetwork={setSelectedNetwork} />
+      <Filters
+        networks={networks}
+        teams={fbsTeams}
+        setNetwork={setSelectedNetwork}
+        setConfGamesOnly={setConfGamesOnly}
+        setSelectedTeam={setSelectedTeam}
+      />
       {
         weekData.map(({fieldValue, edges: gamesForWeek}) => (
           <GameWeek
             key={fieldValue}
             gamesForWeek={gamesForWeek}
-            filters={ { selectedNetwork } }
+            filters={ { selectedNetwork, confGamesOnly, selectedTeam } }
             week={weekNumber(fieldValue)}
             weekYear={fieldValue}
           />

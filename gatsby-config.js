@@ -34,7 +34,7 @@ module.exports = {
         typeName: `CFB_API`,
         fieldName: `cfbApi`,
         url: `http://localhost:3003/graphql`,
-        refetchInterval: 60
+        refetchInterval: 60*60*2
       }
     }
     // this (optional) plugin enables Progressive Web App + Offline functionality
