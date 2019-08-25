@@ -1,5 +1,5 @@
 import React from 'react';
-import { prop, map, path, __, pathEq, filter, ifElse, identity, equals, T, isNil, not, and, pipe, anyPass } from 'ramda';
+import { prop, map, pathEq, filter, ifElse, identity, equals, T, isNil, not, and, pipe, anyPass } from 'ramda';
 
 import { isConferenceGame } from '../utils/game-utils'
 
@@ -52,10 +52,7 @@ const GameWeek = (props) => {
     filterGamesForConferenceOnly
   )(games);
 
-  console.log(games[0])
-
   try {
-    const gamesLength = filteredGamesForWeek.length
   } catch (e) {
     return (
       <div>
