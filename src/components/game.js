@@ -38,12 +38,12 @@ const Game = ({path, pageContext: game}) => {
       
       <div className="border border-gray-500 px-2 py-4 flex items-center justify-around sm:justify-between flex-wrap sm:flex-no-wrap">
         <div className="flex flex-col align-center order-none sm:order-first">
-          { //visitorImage || 
+          { visitorImage || 
           placeholderTeamImage }
           <span className="text-sm font-semibold text-center">{visitorAbbreviation}</span>
         </div>
         <div className="flex flex-col align-center order-none sm:order-last">
-          { //homeImage || 
+          { homeImage || 
             placeholderTeamImage }
           <span className="text-sm font-semibold text-center">{homeAbbreviation}</span>
         </div>
