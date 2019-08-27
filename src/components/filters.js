@@ -2,10 +2,10 @@ import React from 'react'
 import { isNil, reject, prepend, pipe } from 'ramda'
 
 const Filters = (props) => {
-  // console.log(props)
-  const { networks, teams, setNetwork, setConfGamesOnly, setSelectedTeam } = props;
+  const { networks, teams, conferences, setNetwork, setConfGamesOnly, setSelectedTeam, setSelectedConference } = props;
 
   const filteredNetworks = pipe(reject(isNil), prepend('-- All --'))(networks);
+  const filteredConferences = pipe(reject(isNil), prepend({id: null, name: '-- All --'}))(conferences);
 
   const handleNetwork = (event) => {
     setNetwork(event.target.value);
@@ -18,6 +18,10 @@ const Filters = (props) => {
   const handleTeam = (event) => {
     setSelectedTeam(event.target.value);
   };
+
+  const handleConference = (event) => {
+    setSelectedConference(event.target.value)
+  }
 
   return (
     <div className="border border-gray-300 px-3 py-2 rounded bg-gray-100">
@@ -44,6 +48,17 @@ const Filters = (props) => {
             {
               teams.map((team) => (
                 <option key={team.id} value={team.id}>{ team.displayName }</option>
+              ))
+            }
+          </select>
+        </div>
+
+        <div className="flex flex-wrap justify-start items-center py-2">
+          <label className="font-bold mr-2">Conference:</label>
+          <select onChange={handleConference} name="conferences" className="appearance-none border">
+            {
+              filteredConferences.map((conference) => (
+                <option key={conference.id} value={conference.id}>{ conference.name }</option>
               ))
             }
           </select>

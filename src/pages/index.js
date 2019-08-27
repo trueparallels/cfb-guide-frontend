@@ -23,6 +23,10 @@ const IndexPage = () => {
             name
           }
         }
+        conference {
+          id
+          name
+        }
       }
       allSitePage(sort:{
         fields: [context___gameWeekYear, context___date],
@@ -82,6 +86,7 @@ const IndexPage = () => {
   const [selectedNetwork, setSelectedNetwork] = useState('-- All --');
   const [confGamesOnly, setConfGamesOnly] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState(null);
+  const [selectedConference, setSelectedConference] = useState(null);
 
   const weekData = data.allSitePage.group;
   const weekNumber = x => (Number(x.split('-')[1]));
@@ -89,6 +94,7 @@ const IndexPage = () => {
     return weekNumber(a.fieldValue) - weekNumber(b.fieldValue)
   });
 
+  const conferences = data.cfbApi.conference.sort((a, b) => a.name.localeCompare(b.name));
   const networks = data.cfbApi.networks.map(n => n.name).sort();
   const fbsTeams = prepend({ id: null, displayName: '-- All Teams --'}, sortTeamsByName(reject(isFCSTeam, data.cfbApi.teams)));
 
@@ -98,16 +104,18 @@ const IndexPage = () => {
       <Filters
         networks={networks}
         teams={fbsTeams}
+        conferences={conferences}
         setNetwork={setSelectedNetwork}
         setConfGamesOnly={setConfGamesOnly}
         setSelectedTeam={setSelectedTeam}
+        setSelectedConference={setSelectedConference}
       />
       {
         weekData.map(({fieldValue, edges: gamesForWeek}) => (
           <GameWeek
             key={fieldValue}
             gamesForWeek={gamesForWeek}
-            filters={ { selectedNetwork, confGamesOnly, selectedTeam } }
+            filters={ { selectedNetwork, confGamesOnly, selectedTeam, selectedConference } }
             week={weekNumber(fieldValue)}
             weekYear={fieldValue}
           />
