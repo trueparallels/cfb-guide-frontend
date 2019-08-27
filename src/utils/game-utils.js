@@ -10,13 +10,6 @@ export const getVisitorTeamConferenceLens = compose(visitorTeamLens, getTeamConf
 export const getHomeTeamConferenceId = compose(getHomeTeamConferenceLens, lensPath(['id']))
 export const getVisitorTeamConferenceId = compose(getVisitorTeamConferenceLens, lensPath(['id']))
 
-// export const isConferenceGame = (visitorTeam, homeTeam) => (
-//   pipe(
-//     map(getTeamConferenceName),
-//     allIdentical
-//   )(list(visitorTeam, homeTeam))
-// )
-
 export const isConferenceGame = pipe(
   juxt([view(getHomeTeamConferenceId), view(getVisitorTeamConferenceId)]),
   allIdentical
