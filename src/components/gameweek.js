@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { prop, map, pathEq, filter, ifElse, identity, equals, T, isNil, not, and, pipe, anyPass } from 'ramda';
 
 import { isConferenceGame, isFinal } from '../utils/game-utils'
@@ -7,6 +7,10 @@ import Game from './game';
 import Final from './final';
 
 const GameWeek = (props) => {
+  const [showGames, setShowGames] = useState(false);
+
+  const handleShowGames = () => setShowGames(!showGames)
+
   const { week, weekYear, gamesForWeek, filters } = props;
   const { selectedNetwork, confGamesOnly, selectedTeam, selectedConference } = filters;
 
@@ -75,12 +79,22 @@ const GameWeek = (props) => {
     filterGamesForConferenceOnly
   )(completedGames);
 
+  const noGamesFinal = equals(0, completedGames.length)
+
   return (
     <div className="max-w-5xl mx-auto my-6">
       <a name={`week-${week}`}>
         <h2 className="font-raleway text-2xl md:text-3xl">{ `Week ${week}` }</h2>
       </a>
-      <div className="flex flex-wrap justify-center">
+      <div className={`flex items-center justify-between border border-gray-300 px-4 py-3 rounded ${noGamesFinal ? 'hidden' : ''}`}>
+        <span className="text-sm font-extrabold">{`${games.length} Games Completed ${filteredCompletedGames.length < completedGames.length ? '(Filtered)' : '' }`}</span>
+        <button
+          onClick={handleShowGames}
+          type="button"
+          className="border border-gray-400 text-sm rounded bg-gray-200 font-bold px-3 py-2 hover:bg-gray-300 w-32"
+          >{showGames ? `Hide Games` : `Show Games`}</button>
+      </div>
+      <div className={`flex flex-wrap justify-center ${showGames ? '' : 'hidden'}`}>
         {
           filteredCompletedGames.map((game) => (
             <Final key={game.context.gameId} game={game.context} home={game.context.homeTeam} visitor={game.context.visitorTeam} />
