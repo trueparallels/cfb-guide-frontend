@@ -29,9 +29,7 @@ const Layout = ({ children }) => {
       <div className="mx-4 my-2 font-opensans">
         <main>{children}</main>
         <footer>
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+          © {new Date().getFullYear()}
         </footer>
       </div>
     </>

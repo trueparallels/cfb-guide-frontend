@@ -45,7 +45,9 @@ const IndexPage = () => {
                 date
                 network
                 home
+                homeFinalScore
                 visitor
+                visitorFinalScore
                 homeAbbreviation
                 visitorAbbreviation
                 isNeutralSite

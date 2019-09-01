@@ -12,7 +12,9 @@ exports.createPages = async ({actions, graphql}) => {
           date
           network
           home
+          homeFinalScore
           visitor
+          visitorFinalScore
           homeAbbreviation
           visitorAbbreviation
           isNeutralSite
