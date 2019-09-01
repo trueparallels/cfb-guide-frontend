@@ -1,9 +1,10 @@
 import React from 'react';
 import { prop, map, pathEq, filter, ifElse, identity, equals, T, isNil, not, and, pipe, anyPass } from 'ramda';
 
-import { isConferenceGame } from '../utils/game-utils'
+import { isConferenceGame, isFinal } from '../utils/game-utils'
 
 import Game from './game';
+import Final from './final';
 
 const GameWeek = (props) => {
   const { week, weekYear, gamesForWeek, filters } = props;
@@ -26,6 +27,13 @@ const GameWeek = (props) => {
   const isAnyNetworkSelected = () => not(equals(selectedNetwork, '-- All --'));
   const isAnyTeamSelected = () => and(not(isNil(selectedTeam)), not(equals(selectedTeam, '-- All Teams --')));
   const isConfGameOnlySelected = () => equals(confGamesOnly, T());
+
+  const completedGames = games.filter((game) => {
+    return isFinal(prop('context', game))
+  })
+  const scheduledGames = games.filter((game) => {
+    return !isFinal(prop('context', game))
+  })
 
   const filterGamesForNetwork = ifElse(
     isAnyNetworkSelected,
@@ -61,23 +69,20 @@ const GameWeek = (props) => {
     filterGamesForTeam,
     filterGamesForSelectedConference,
     filterGamesForConferenceOnly
-  )(games);
-
-  try {
-  } catch (e) {
-    return (
-      <div>
-        <h4>Error retrieving length of filtered games</h4>
-        <pre class="border">{e.message}</pre>
-      </div>
-    )
-  }
+  )(scheduledGames);
 
   return (
     <div className="max-w-5xl mx-auto my-6">
       <a href={`${weekYearHref}`} name={`week-${week}`}>
         <h2 className="font-raleway text-2xl md:text-3xl">{ `Week ${week}` }</h2>
       </a>
+      <div className="flex flex-wrap justify-center">
+        {
+          completedGames.map((game) => (
+            <Final key={game.context.gameId} game={game.context} home={game.context.homeTeam} visitor={game.context.visitorTeam} />
+          ))
+        }
+      </div>
       {
         filteredGamesForWeek.length === 0 &&
         (

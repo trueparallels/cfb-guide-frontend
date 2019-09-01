@@ -8,13 +8,7 @@ import TeamImage from './TeamImage'
 import {
   isConferenceGame,
   getTeamConferenceName,
-  isFinal,
-  homeFinalScore,
-  visitorFinalScore,
-  getHomeTeamLocation,
-  getVisitorTeamLocation,
-  homeWinner,
-  visitorWinner
+  isFinal
 } from '../utils/game-utils'
 
 const formatGameDate = (date) => {
@@ -40,42 +34,35 @@ const Game = ({path, pageContext: game}) => {
   const hexColor = (colorCode) => `#${colorCode}`
 
   try {
+    if (isFinal(game)) {
+      return (<Final game={game} home={homeTeam} visitor={visitorTeam} />);
+    }
+
     return (
       <div key={gameId}>
         <div className="flex">
           <div style={ {backgroundColor: hexColor(visitorTeam.color), height: '20px', width: '50%'}}></div>
           <div style={ {backgroundColor: hexColor(homeTeam.color), height: '20px', width: '50%'}}></div>
         </div>
-        
         <div className="border border-gray-500 px-2 py-4 flex items-center justify-around sm:justify-between flex-wrap sm:flex-no-wrap">
-          {
-            isFinal(game) && (<Final game={game} home={homeTeam} visitor={visitorTeam} />)
-          }
-          {
-            !isFinal(game) && (
-              <React.Fragment>
-                <div className="flex flex-col align-center order-none sm:order-first">
-                  <TeamImage team={visitorTeam} />
-                  <span className="text-sm font-semibold text-center">{visitorAbbreviation}</span>
-                </div>
-                <div className="flex flex-col align-center order-none sm:order-last">
-                  <TeamImage team={homeTeam} />
-                  <span className="text-sm font-semibold text-center">{homeAbbreviation}</span>
-                </div>
-                <div className="flex flex-col min-w-full sm:min-w-40">
-                  <Link to={path}>
-                    <div className="text-center text-base sm:text-xl mb-3 font-raleway">{`${visitor} ${isNeutralSite ? 'vs.' : 'at'} ${home}`}</div>
-                    <div className="text-center text-sm sm:text-lg font-raleway font-extrabold">{ gameTime }</div>
-                    <div className="text-center text-sm sm:text-base">{ `${gameDayOfWeek} ${gameDate ? gameDate : ''}` }</div>
-                    <div className="text-center text-base sm:text-xl font-raleway">{ network }</div>
-                    <div className="text-center text-sm sm:text-base">{ `${getTeamConferenceName(visitorTeam)} vs. ${getTeamConferenceName(homeTeam)}` }</div>
-                    <div className="text-center text-sm sm:text-base">{ isConferenceGame(game) ? 'Conference' : 'Non-Con' }</div>
-                  </Link>
-                </div>
-              </React.Fragment>
-            )
-          }
-          
+          <div className="flex flex-col align-center order-none sm:order-first">
+            <TeamImage team={visitorTeam} />
+            <span className="text-sm font-semibold text-center">{visitorAbbreviation}</span>
+          </div>
+          <div className="flex flex-col align-center order-none sm:order-last">
+            <TeamImage team={homeTeam} />
+            <span className="text-sm font-semibold text-center">{homeAbbreviation}</span>
+          </div>
+          <div className="flex flex-col min-w-full sm:min-w-40">
+            <Link to={path}>
+              <div className="text-center text-base sm:text-xl mb-3 font-raleway">{`${visitor} ${isNeutralSite ? 'vs.' : 'at'} ${home}`}</div>
+              <div className="text-center text-sm sm:text-lg font-raleway font-extrabold">{ gameTime }</div>
+              <div className="text-center text-sm sm:text-base">{ `${gameDayOfWeek} ${gameDate ? gameDate : ''}` }</div>
+              <div className="text-center text-base sm:text-xl font-raleway">{ network }</div>
+              <div className="text-center text-sm sm:text-base">{ `${getTeamConferenceName(visitorTeam)} vs. ${getTeamConferenceName(homeTeam)}` }</div>
+              <div className="text-center text-sm sm:text-base">{ isConferenceGame(game) ? 'Conference' : 'Non-Con' }</div>
+            </Link>
+          </div>
         </div>
       </div>
     )
