@@ -10,9 +10,6 @@ const GameWeek = (props) => {
   const { week, weekYear, gamesForWeek, filters } = props;
   const { selectedNetwork, confGamesOnly, selectedTeam, selectedConference } = filters;
 
-  const [year, weekNo] = weekYear.split('-');
-  const weekYearHref = `/${year}/week-${weekNo.padStart(2, '0')}`;
-
   const games = map(prop('node'), gamesForWeek);
 
   const isHomeTeam = pathEq(['context', 'homeTeam', 'id'], selectedTeam)
