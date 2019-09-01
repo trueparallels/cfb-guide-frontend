@@ -23,7 +23,7 @@ const GameWeek = (props) => {
   const isVisitorTeamInConference = pathEq(['context', 'visitorTeam', 'conference', 'id'], selectedConference)
   const isConferenceInGame = anyPass([isHomeTeamInConference, isVisitorTeamInConference])
 
-  const isAnyConferenceSelected = () => not(isNil(selectedConference))
+  const isAnyConferenceSelected = () => and(not(isNil(selectedConference)), not(equals(selectedConference, '-- All --')))
   const isAnyNetworkSelected = () => not(equals(selectedNetwork, '-- All --'));
   const isAnyTeamSelected = () => and(not(isNil(selectedTeam)), not(equals(selectedTeam, '-- All Teams --')));
   const isConfGameOnlySelected = () => equals(confGamesOnly, T());
@@ -71,6 +71,13 @@ const GameWeek = (props) => {
     filterGamesForConferenceOnly
   )(scheduledGames);
 
+  const filteredCompletedGames = pipe(
+    filterGamesForNetwork,
+    filterGamesForTeam,
+    filterGamesForSelectedConference,
+    filterGamesForConferenceOnly
+  )(completedGames);
+
   return (
     <div className="max-w-5xl mx-auto my-6">
       <a href={`${weekYearHref}`} name={`week-${week}`}>
@@ -78,7 +85,7 @@ const GameWeek = (props) => {
       </a>
       <div className="flex flex-wrap justify-center">
         {
-          completedGames.map((game) => (
+          filteredCompletedGames.map((game) => (
             <Final key={game.context.gameId} game={game.context} home={game.context.homeTeam} visitor={game.context.visitorTeam} />
           ))
         }
