@@ -18,7 +18,7 @@ const Final = (props) => {
   
   return (
     <div className="border border-gray-800 px-5 py-4 mx-3 my-3">
-      <div className={`flex items-center w-56 justify-between ${visitorWinner(game) ? 'font-extrabold' : 'text-gray-500'}`}>
+      <div className={`flex items-center w-56 justify-between mb-1 ${visitorWinner(game) ? 'font-extrabold' : 'text-gray-500'}`}>
         <TeamImage team={visitor} isSmall={true} />
         <span className="inline sm:hidden">{ visitorAbbreviation }</span>
         <span className="hidden sm:inline">{ getVisitorTeamLocation(game) }</span>

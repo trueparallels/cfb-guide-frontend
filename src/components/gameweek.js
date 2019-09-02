@@ -87,7 +87,7 @@ const GameWeek = (props) => {
         <h2 className="font-raleway text-2xl md:text-3xl">{ `Week ${week}` }</h2>
       </a>
       <div className={`flex items-center justify-between border border-gray-300 px-4 py-3 rounded ${noGamesFinal ? 'hidden' : ''}`}>
-        <span className="text-sm font-extrabold">{`${games.length} Games Completed ${filteredCompletedGames.length < completedGames.length ? '(Filtered)' : '' }`}</span>
+        <span className="text-sm font-extrabold">{`${completedGames.length}/${games.length} Games Completed ${filteredCompletedGames.length < completedGames.length ? '(Filtered)' : '' }`}</span>
         <button
           onClick={handleShowGames}
           type="button"

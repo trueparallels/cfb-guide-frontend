@@ -26,7 +26,7 @@ const Filters = (props) => {
   return (
     <div className="border border-gray-300 px-3 py-2 rounded bg-gray-100">
       <div className="flex flex-wrap justify-between">
-        <div className="mr-4 flex flex-wrap justify-start items-center py-2">
+        <div className="mr-4 flex flex-wrap justify-start items-center py-2 mx-1">
           <label className="font-bold mr-2">Networks:</label>
           <select onChange={handleNetwork} defaultValue={`-- All --`} className="appearance-none border">
             {
@@ -37,12 +37,12 @@ const Filters = (props) => {
           </select>
         </div>
 
-        <div className="flex flex-wrap justify-start items-center py-2">
+        <div className="flex flex-wrap justify-start items-center py-2 mx-1">
           <label className="font-bold mr-2">Conference Only:</label>
           <input type="checkbox" name="conf_games_only" onChange={handleConfGamesOnly} />
         </div>
 
-        <div className="flex flex-wrap justify-start items-center py-2">
+        <div className="flex flex-wrap justify-start items-center py-2 mx-1">
           <label className="font-bold mr-2">Team:</label>
           <select onChange={handleTeam} name="teams" className="appearance-none border">
             {
@@ -53,7 +53,7 @@ const Filters = (props) => {
           </select>
         </div>
 
-        <div className="flex flex-wrap justify-start items-center py-2">
+        <div className="flex flex-wrap justify-start items-center py-2 mx-1">
           <label className="font-bold mr-2">Conference:</label>
           <select onChange={handleConference} name="conferences" className="appearance-none border">
             {
