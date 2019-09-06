@@ -11,8 +11,8 @@ const GameWeek = (props) => {
 
   const handleShowGames = () => setShowGames(!showGames)
 
-  const { week, weekYear, gamesForWeek, filters } = props;
-  const { selectedNetwork, confGamesOnly, selectedTeam, selectedConference } = filters;
+  const { week, gamesForWeek, filters } = props;
+  const { selectedNetwork, confGamesOnly, selectedTeam, selectedConference, tvNotScheduled } = filters;
 
   const games = map(prop('node'), gamesForWeek);
 
@@ -23,11 +23,13 @@ const GameWeek = (props) => {
   const isHomeTeamInConference = pathEq(['context', 'homeTeam', 'conference', 'id'], selectedConference)
   const isVisitorTeamInConference = pathEq(['context', 'visitorTeam', 'conference', 'id'], selectedConference)
   const isConferenceInGame = anyPass([isHomeTeamInConference, isVisitorTeamInConference])
+  const isTvNotScheduledForGame = pathEq(['context', 'network'], null)
 
   const isAnyConferenceSelected = () => and(not(isNil(selectedConference)), not(equals(selectedConference, '-- All --')))
   const isAnyNetworkSelected = () => not(equals(selectedNetwork, '-- All --'));
   const isAnyTeamSelected = () => and(not(isNil(selectedTeam)), not(equals(selectedTeam, '-- All Teams --')));
   const isConfGameOnlySelected = () => equals(confGamesOnly, T());
+  const isTvNotScheduledSelected = () => equals(tvNotScheduled, T());
 
   const completedGames = games.filter((game) => {
     return isFinal(prop('context', game))
@@ -65,25 +67,33 @@ const GameWeek = (props) => {
     identity
   );
 
+  const filterGamesForNoTvScheduled = ifElse(
+    isTvNotScheduledSelected,
+    filter(isTvNotScheduledForGame),
+    identity
+  )
+
   const filteredGamesForWeek = pipe(
     filterGamesForNetwork,
     filterGamesForTeam,
     filterGamesForSelectedConference,
-    filterGamesForConferenceOnly
+    filterGamesForConferenceOnly,
+    filterGamesForNoTvScheduled
   )(scheduledGames);
 
   const filteredCompletedGames = pipe(
     filterGamesForNetwork,
     filterGamesForTeam,
     filterGamesForSelectedConference,
-    filterGamesForConferenceOnly
+    filterGamesForConferenceOnly,
+    filterGamesForNoTvScheduled
   )(completedGames);
 
   const noGamesFinal = equals(0, completedGames.length)
 
   return (
     <div className="max-w-5xl mx-auto my-6">
-      <a name={`week-${week}`}>
+      <a href={`#week-${week}`} name={`week-${week}`}>
         <h2 className="font-raleway text-2xl md:text-3xl">{ `Week ${week}` }</h2>
       </a>
       <div className={`flex items-center justify-between border border-gray-300 px-4 py-3 rounded ${noGamesFinal ? 'hidden' : ''}`}>

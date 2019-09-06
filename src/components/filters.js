@@ -2,7 +2,7 @@ import React from 'react'
 import { isNil, reject, prepend, pipe } from 'ramda'
 
 const Filters = (props) => {
-  const { networks, teams, conferences, setNetwork, setConfGamesOnly, setSelectedTeam, setSelectedConference } = props;
+  const { networks, teams, conferences, setNetwork, setConfGamesOnly, setSelectedTeam, setSelectedConference, setTvNotScheduled } = props;
 
   const filteredNetworks = pipe(reject(isNil), prepend('-- All --'))(networks);
   const filteredConferences = pipe(reject(isNil), prepend({id: null, name: '-- All --'}))(conferences);
@@ -23,6 +23,10 @@ const Filters = (props) => {
     setSelectedConference(event.target.value)
   }
 
+  const handleTvNotScheduled = (event) => {
+    setTvNotScheduled(event.target.checked)
+  }
+
   return (
     <div className="border border-gray-300 px-3 py-2 rounded bg-gray-100">
       <div className="flex flex-wrap justify-between">
@@ -35,6 +39,11 @@ const Filters = (props) => {
               ))
             }
           </select>
+        </div>
+
+        <div className="flex flex-wrap justify-start items-center py-2 mx-1">
+          <label className="font-bold mr-2">TV Not Scheduled:</label>
+          <input type="checkbox" name="tv_not_scheduled" onChange={handleTvNotScheduled} />
         </div>
 
         <div className="flex flex-wrap justify-start items-center py-2 mx-1">

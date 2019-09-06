@@ -4,6 +4,8 @@ import { reject, prepend } from 'ramda'
 
 import Layout from "../components/layout"
 import Filters from "../components/filters"
+import JumpToWeek from "../components/JumpToWeek"
+import BackToTopButton from "../components/BackToTopButton"
 import SEO from "../components/seo"
 import GameWeek from "../components/gameweek"
 
@@ -87,6 +89,7 @@ const IndexPage = () => {
 
   const [selectedNetwork, setSelectedNetwork] = useState('-- All --');
   const [confGamesOnly, setConfGamesOnly] = useState(false);
+  const [tvNotScheduled, setTvNotScheduled] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [selectedConference, setSelectedConference] = useState(null);
 
@@ -111,18 +114,21 @@ const IndexPage = () => {
         setConfGamesOnly={setConfGamesOnly}
         setSelectedTeam={setSelectedTeam}
         setSelectedConference={setSelectedConference}
+        setTvNotScheduled={setTvNotScheduled}
       />
+      <JumpToWeek weeks={weekData.map(week => week.fieldValue)} />
       {
         weekData.map(({fieldValue, edges: gamesForWeek}) => (
           <GameWeek
             key={fieldValue}
             gamesForWeek={gamesForWeek}
-            filters={ { selectedNetwork, confGamesOnly, selectedTeam, selectedConference } }
+            filters={ { selectedNetwork, confGamesOnly, selectedTeam, selectedConference, tvNotScheduled } }
             week={weekNumber(fieldValue)}
             weekYear={fieldValue}
           />
         ))
       }
+      <BackToTopButton />
     </Layout>
   )
 }
