@@ -90,6 +90,7 @@ const GameWeek = (props) => {
   )(completedGames);
 
   const noGamesFinal = equals(0, completedGames.length)
+  const allGamesFinal = equals(games.length, completedGames.length)
 
   return (
     <div className="max-w-5xl mx-auto my-6">
@@ -112,7 +113,7 @@ const GameWeek = (props) => {
         }
       </div>
       {
-        filteredGamesForWeek.length === 0 &&
+        filteredGamesForWeek.length === 0 && !allGamesFinal &&
         (
           <h4>No games currently scheduled this week for given filters.</h4>
         )
