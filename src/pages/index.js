@@ -10,6 +10,7 @@ import SEO from "../components/seo"
 import GameWeek from "../components/gameweek"
 
 import { isFCSTeam, sortTeamsByName } from '../utils/team-utils'
+import { allGamesFinalForWeek } from '../utils/game-utils'
 
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
@@ -103,9 +104,14 @@ const IndexPage = () => {
   const networks = data.cfbApi.networks.map(n => n.name).sort();
   const fbsTeams = prepend({ id: null, displayName: '-- All Teams --'}, sortTeamsByName(reject(isFCSTeam, data.cfbApi.teams)));
 
+  const finishedWeeks = weekData.filter(w => allGamesFinalForWeek(w))
+  const incompleteWeeks = weekData.filter(w => !allGamesFinalForWeek(w))
+
+
   return (
     <Layout>
       <SEO title="CFB Guide" />
+      <JumpToWeek weeks={weekData.map(week => week.fieldValue)} />
       <Filters
         networks={networks}
         teams={fbsTeams}
@@ -116,9 +122,19 @@ const IndexPage = () => {
         setSelectedConference={setSelectedConference}
         setTvNotScheduled={setTvNotScheduled}
       />
-      <JumpToWeek weeks={weekData.map(week => week.fieldValue)} />
       {
-        weekData.map(({fieldValue, edges: gamesForWeek}) => (
+        finishedWeeks.map(({fieldValue, edges: gamesForWeek}) => (
+          <GameWeek
+            key={fieldValue}
+            gamesForWeek={gamesForWeek}
+            filters={ { selectedNetwork, confGamesOnly, selectedTeam, selectedConference, tvNotScheduled } }
+            week={weekNumber(fieldValue)}
+            weekYear={fieldValue}
+          />
+        ))
+      }
+      {
+        incompleteWeeks.map(({fieldValue, edges: gamesForWeek}) => (
           <GameWeek
             key={fieldValue}
             gamesForWeek={gamesForWeek}

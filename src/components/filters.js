@@ -28,11 +28,11 @@ const Filters = (props) => {
   }
 
   return (
-    <div className="border border-gray-300 px-3 py-2 rounded bg-gray-100">
+    <div className="border border-green-400 px-3 py-2 rounded bg-green-200">
       <div className="flex flex-wrap justify-between">
         <div className="mr-4 flex flex-wrap justify-start items-center py-2 mx-1">
           <label className="font-bold mr-2">Networks:</label>
-          <select onChange={handleNetwork} defaultValue={`-- All --`} className="appearance-none border">
+          <select onChange={handleNetwork} defaultValue={`-- All --`} className="appearance-none border bg-white">
             {
               filteredNetworks.map(network => (
                 <option key={network} value={network}>{network}</option>
@@ -53,7 +53,7 @@ const Filters = (props) => {
 
         <div className="flex flex-wrap justify-start items-center py-2 mx-1">
           <label className="font-bold mr-2">Team:</label>
-          <select onChange={handleTeam} name="teams" className="appearance-none border">
+          <select onChange={handleTeam} name="teams" className="appearance-none border bg-white">
             {
               teams.map((team) => (
                 <option key={team.id} value={team.id}>{ team.displayName }</option>
@@ -64,7 +64,7 @@ const Filters = (props) => {
 
         <div className="flex flex-wrap justify-start items-center py-2 mx-1">
           <label className="font-bold mr-2">Conference:</label>
-          <select onChange={handleConference} name="conferences" className="appearance-none border">
+          <select onChange={handleConference} name="conferences" className="appearance-none border bg-white">
             {
               filteredConferences.map((conference) => (
                 <option key={conference.id} value={conference.id}>{ conference.name }</option>

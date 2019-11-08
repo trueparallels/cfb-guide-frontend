@@ -1,4 +1,4 @@
-import { pipe, path, lensPath, juxt, view, compose, not, isNil } from 'ramda'
+import { map, any, equals, pipe, path, lensPath, juxt, view, compose, not, isNil } from 'ramda'
 import { allIdentical } from 'ramda-adjunct'
 
 export const getTeamConferenceName = path(['conference', 'name'])
@@ -35,3 +35,11 @@ export const visitorWinner = (game) => {
 
   return visitorFinal > homeFinal
 }
+
+
+export const allGamesFinalForWeek = pipe(
+  path(['edges']),
+  map(path(['node', 'context'])),
+  map(isFinal),
+  any(equals(false))
+)

@@ -4,7 +4,7 @@ const JumpToWeek = (props) => {
   const { weeks } = props;
 
   return (
-    <div className="flex flex-wrap border border-gray-300 bg-gray-100 mt-5 px-5 py-4">
+    <div className="flex flex-wrap border border-green-400 bg-green-200 my-5 px-5 py-4">
       <div className="w-full font-bold">Jump To:</div>
       {
         weeks.map(week => {
