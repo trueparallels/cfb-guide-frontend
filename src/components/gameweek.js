@@ -95,7 +95,7 @@ const GameWeek = (props) => {
   return (
     <div className="max-w-5xl mx-auto my-6">
       <a href={`#week-${week}`} name={`week-${week}`}>
-        <h2 className="font-raleway text-2xl md:text-3xl">{ `Week ${week}` }</h2>
+        <h2 className="font-raleway text-2xl md:text-3xl">{ week !== 15 ? `Week ${week}` : 'Championship Weekend' }</h2>
       </a>
       <div className={`flex items-center justify-between border border-gray-300 px-4 py-3 rounded ${noGamesFinal ? 'hidden' : ''}`}>
         <span className="text-sm font-extrabold">{`${completedGames.length}/${games.length} Games Completed ${filteredCompletedGames.length < completedGames.length ? '(Filtered)' : '' }`}</span>

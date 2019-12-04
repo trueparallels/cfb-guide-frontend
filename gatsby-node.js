@@ -75,7 +75,7 @@ exports.createPages = async ({actions, graphql}) => {
     `);
   };
 
-  const weeks = R.range(1,15)
+  const weeks = R.range(1,16)
   const networksData = await networkQuery()
   console.log(networksData)
   const networks = networksData.data.cfbApi.networks.map(n => n.name)
@@ -93,6 +93,7 @@ exports.createPages = async ({actions, graphql}) => {
     data.forEach(item => {
       // console.log(item.data.cfbApi.byWeek)
       const gamesByWeek = item.data.cfbApi.byWeek
+      console.log(item)
       console.log(gamesByWeek[0].gameWeekYear, gamesByWeek.length)
 
       actions.createPage({

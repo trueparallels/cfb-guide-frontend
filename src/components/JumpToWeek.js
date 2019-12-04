@@ -8,11 +8,12 @@ const JumpToWeek = (props) => {
       <div className="w-full font-bold">Jump To:</div>
       {
         weeks.map(week => {
-          const weekTitle = `Week ${week.replace('2019-', '')}`;
+          const weekNumber = week.replace('2019-', '')
+          const weekTitle = `Week ${weekNumber}`;
 
           return (
             <span key={week} className="pr-2 py-1">
-              <a className="underline" href={`#week-${week.replace('2019-', '')}`}>{weekTitle}</a>
+              <a className="underline" href={`#week-${week.replace('2019-', '')}`}>{parseInt(weekNumber) === 15 ? "Championship Weekend" : weekTitle}</a>
             </span>
           );
         })
