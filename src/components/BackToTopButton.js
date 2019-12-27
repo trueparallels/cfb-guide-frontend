@@ -22,7 +22,7 @@ const BackToTopButton = () => {
 
   return (
     <div className={`fixed bottom-0 right-0 mr-3 mb-3 ${showButton ? '' : 'hidden'}`}>
-      <div onClick={handleClick} className="cursor-pointer border border-gray-500 bg-gray-400 w-12 flex justify-center px-8 py-1 rounded-full">
+      <div tabIndex={0} role="link" onKeyDown={handleClick} onClick={handleClick} className="cursor-pointer border border-gray-500 bg-gray-400 w-12 flex justify-center px-8 py-1 rounded-full">
         <span className="text-4xl" role="img" aria-label="up!">☝️</span>
       </div>
     </div>
