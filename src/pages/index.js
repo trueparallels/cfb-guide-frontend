@@ -47,6 +47,7 @@ const IndexPage = () => {
                 gameWeekYear
                 date
                 network
+                headline
                 home
                 homeFinalScore
                 visitor

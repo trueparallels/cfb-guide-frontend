@@ -1,4 +1,4 @@
-import { map, any, equals, pipe, path, lensPath, juxt, view, compose, not, isNil } from 'ramda'
+import { map, any, equals, pipe, prop, path, lensPath, juxt, view, compose, not, isNil, has, defaultTo } from 'ramda'
 import { allIdentical } from 'ramda-adjunct'
 
 export const getTeamConferenceName = path(['conference', 'name'])
@@ -36,10 +36,27 @@ export const visitorWinner = (game) => {
   return visitorFinal > homeFinal
 }
 
-
 export const allGamesFinalForWeek = pipe(
   path(['edges']),
   map(path(['node', 'context'])),
   map(isFinal),
   any(equals(false))
+)
+
+const weekNames = {
+  15: "Championship Weekend",
+  16: "Bowls"
+}
+
+export const getWeekName = (week) => {
+  if(has(week, weekNames)) {
+    return prop(week, weekNames)
+  }
+
+  return `Week ${week}`
+}
+
+export const getTeamColor = pipe(
+  prop('color'),
+  defaultTo('6a6a6a')
 )

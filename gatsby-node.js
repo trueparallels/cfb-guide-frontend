@@ -11,6 +11,7 @@ exports.createPages = async ({actions, graphql}) => {
           gameWeekYear
           date
           network
+          headline
           home
           homeFinalScore
           visitor
@@ -75,7 +76,7 @@ exports.createPages = async ({actions, graphql}) => {
     `);
   };
 
-  const weeks = R.range(1,16)
+  const weeks = R.range(1,17)
   const networksData = await networkQuery()
   console.log(networksData)
   const networks = networksData.data.cfbApi.networks.map(n => n.name)

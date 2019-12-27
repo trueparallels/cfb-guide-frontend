@@ -1,4 +1,5 @@
 import React from 'react'
+import { getWeekName } from '../utils/game-utils'
 
 const JumpToWeek = (props) => {
   const { weeks } = props;
@@ -9,11 +10,11 @@ const JumpToWeek = (props) => {
       {
         weeks.map(week => {
           const weekNumber = week.replace('2019-', '')
-          const weekTitle = `Week ${weekNumber}`;
+          const weekTitle = getWeekName(weekNumber);
 
           return (
             <span key={week} className="pr-2 py-1">
-              <a className="underline" href={`#week-${week.replace('2019-', '')}`}>{parseInt(weekNumber) === 15 ? "Championship Weekend" : weekTitle}</a>
+              <a className="underline" href={`#week-${week.replace('2019-', '')}`}>{weekTitle}</a>
             </span>
           );
         })

@@ -8,7 +8,8 @@ import TeamImage from './TeamImage'
 import {
   isConferenceGame,
   getTeamConferenceName,
-  isFinal
+  isFinal,
+  getTeamColor
 } from '../utils/game-utils'
 
 const formatGameDate = (date) => {
@@ -26,7 +27,7 @@ const formatGameDate = (date) => {
 };
 
 const Game = ({path, pageContext: game}) => {
-  const { gameId, date, home, visitor, homeAbbreviation, visitorAbbreviation, isNeutralSite, homeTeam, visitorTeam, network } = game;
+  const { gameId, date, home, visitor, homeAbbreviation, visitorAbbreviation, isNeutralSite, homeTeam, visitorTeam, network, headline } = game;
 
   const gameDateAndTime = date ? formatGameDate(new Date(date)) : 'TBD'
   const [gameDayOfWeek, gameDate, gameTime] = gameDateAndTime.split(', ')
@@ -38,20 +39,30 @@ const Game = ({path, pageContext: game}) => {
       return (<Final game={game} home={homeTeam} visitor={visitorTeam} />);
     }
 
+    const teamsDefined = homeTeam && visitorTeam
+
     return (
       <div key={gameId}>
         <div className="flex">
-          <div style={ {backgroundColor: hexColor(visitorTeam.color), height: '20px', width: '50%'}}></div>
-          <div style={ {backgroundColor: hexColor(homeTeam.color), height: '20px', width: '50%'}}></div>
+          <div style={ {backgroundColor: hexColor(getTeamColor(visitorTeam)), height: '20px', width: '50%'}}></div>
+          <div style={ {backgroundColor: hexColor(getTeamColor(homeTeam)), height: '20px', width: '50%'}}></div>
         </div>
         <div className="border border-gray-500 px-2 py-4 flex items-center justify-around sm:justify-between flex-wrap sm:flex-no-wrap">
           <div className="flex flex-col align-center order-none sm:order-first">
             <TeamImage team={visitorTeam} />
-            <span className="text-sm font-semibold text-center">{visitorAbbreviation}</span>
+            {
+              teamsDefined ? 
+                <span className="text-sm font-semibold text-center">{visitorAbbreviation}</span>
+                : null
+            }
           </div>
           <div className="flex flex-col align-center order-none sm:order-last">
             <TeamImage team={homeTeam} />
-            <span className="text-sm font-semibold text-center">{homeAbbreviation}</span>
+            {
+              teamsDefined ?
+                <span className="text-sm font-semibold text-center">{homeAbbreviation}</span>
+                : null
+            }
           </div>
           <div className="flex flex-col min-w-full sm:min-w-40">
             <Link to={path}>
@@ -59,8 +70,21 @@ const Game = ({path, pageContext: game}) => {
               <div className="text-center text-sm sm:text-lg font-raleway font-extrabold">{ gameTime }</div>
               <div className="text-center text-sm sm:text-base">{ `${gameDayOfWeek} ${gameDate ? gameDate : ''}` }</div>
               <div className="text-center text-base sm:text-xl font-raleway">{ network }</div>
-              <div className="text-center text-sm sm:text-base">{ `${getTeamConferenceName(visitorTeam)} vs. ${getTeamConferenceName(homeTeam)}` }</div>
-              <div className="text-center text-sm sm:text-base">{ isConferenceGame(game) ? 'Conference' : 'Non-Con' }</div>
+              {
+                teamsDefined ?
+                  <div className="text-center text-sm sm:text-base">{ `${getTeamConferenceName(visitorTeam)} vs. ${getTeamConferenceName(homeTeam)}` }</div>
+                  : null
+              }
+              {
+                teamsDefined ?
+                  <div className="text-center text-sm sm:text-base">{ isConferenceGame(game) ? 'Conference' : 'Non-Con' }</div> 
+                  : null
+              }
+              {
+                headline ?
+                  <div className="text-center text-base sm:text-md mt-3 font-raleway">{ headline }</div>
+                  : null
+              }
             </Link>
           </div>
         </div>
