@@ -31,12 +31,8 @@ const GameWeek = (props) => {
   const isConfGameOnlySelected = () => equals(confGamesOnly, T());
   const isTvNotScheduledSelected = () => equals(tvNotScheduled, T());
 
-  const completedGames = games.filter((game) => {
-    return isFinal(prop('context', game))
-  })
-  const scheduledGames = games.filter((game) => {
-    return !isFinal(prop('context', game))
-  })
+  const completedGames = games.filter((game) => isFinal(game))
+  const scheduledGames = games.filter((game) => !isFinal(game))
 
   const filterGamesForNetwork = ifElse(
     isAnyNetworkSelected,
@@ -114,7 +110,7 @@ const GameWeek = (props) => {
       <div className={`flex flex-wrap justify-center ${showGames ? '' : 'hidden'}`}>
         {
           filteredCompletedGames.map((game) => (
-            <Final key={game.gameId} game={game.context} home={game.homeTeam} visitor={game.visitorTeam} />
+            <Final key={game.gameId} game={game} />
           ))
         }
       </div>
@@ -127,10 +123,9 @@ const GameWeek = (props) => {
       <ul>
       {
         filteredGamesForWeek.map((game) => {
-          console.log(game)
           return (
             <div key={game.gameId} className="my-4">
-              <Game game={game} selectedNetwork={selectedNetwork} />
+              <Game game={game} />
             </div>
           );
         })
