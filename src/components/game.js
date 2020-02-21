@@ -41,7 +41,7 @@ const Game = ({game}) => {
     const teamsDefined = homeTeam && visitorTeam
 
     return (
-      <div key={gameId}>
+      <div key={gameId} className="shadow-md bg-white">
         <div className="flex">
           <div style={ {backgroundColor: hexColor(getTeamColor(visitorTeam)), height: '20px', width: '50%'}}></div>
           <div style={ {backgroundColor: hexColor(getTeamColor(homeTeam)), height: '20px', width: '50%'}}></div>

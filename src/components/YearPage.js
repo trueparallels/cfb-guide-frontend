@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { reject, prepend } from 'ramda'
-import { useStaticQuery, graphql } from 'gatsby'
+import { useStaticQuery, graphql, navigate } from 'gatsby'
 
 import Layout from "./layout"
 import SEO from "./seo"
@@ -43,6 +43,11 @@ const YearPage = (props) => {
   const [tvNotScheduled, setTvNotScheduled] = useState(false);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [selectedConference, setSelectedConference] = useState(null);
+  const [selectedWeek, setSelectedWeek] = useState(null)
+
+  if (selectedWeek) {
+    navigate(selectedWeek)
+  }
 
   const gamesGroupedByWeek = groupGamesByWeek(games)
   const allWeeksKeys = Object.keys(gamesGroupedByWeek)
@@ -65,7 +70,6 @@ const YearPage = (props) => {
   return (
     <Layout>
       <SEO title="CFB Guide" />
-      <JumpToWeek weeks={allWeeksKeys} year={year} />
       <Filters
         networks={networks}
         teams={fbsTeams}
@@ -76,32 +80,35 @@ const YearPage = (props) => {
         setSelectedConference={setSelectedConference}
         setTvNotScheduled={setTvNotScheduled}
       />
-      {
-        finishedWeeks.map((weekNo) => (
-            <GameWeek
-              key={weekNo}
-              gamesForWeek={gamesGroupedByWeek[weekNo]}
-              filters={ { selectedNetwork, confGamesOnly, selectedTeam, selectedConference, tvNotScheduled } }
-              week={weekNo}
-              weekYear={2020}
-            />
+      <JumpToWeek weeks={allWeeksKeys} year={year} setSelectedWeek={setSelectedWeek} />
+      <div className="mx-4">
+        {
+          finishedWeeks.map((weekNo) => (
+              <GameWeek
+                key={weekNo}
+                gamesForWeek={gamesGroupedByWeek[weekNo]}
+                filters={ { selectedNetwork, confGamesOnly, selectedTeam, selectedConference, tvNotScheduled } }
+                week={weekNo}
+                weekYear={2020}
+              />
 
+            )
           )
-        )
-      }
-      {
-        incompleteWeeks.map((weekNo) => (
-            <GameWeek
-              key={weekNo}
-              gamesForWeek={gamesGroupedByWeek[weekNo]}
-              filters={ { selectedNetwork, confGamesOnly, selectedTeam, selectedConference, tvNotScheduled } }
-              week={weekNo}
-              weekYear={2020}
-            />
+        }
+        {
+          incompleteWeeks.map((weekNo) => (
+              <GameWeek
+                key={weekNo}
+                gamesForWeek={gamesGroupedByWeek[weekNo]}
+                filters={ { selectedNetwork, confGamesOnly, selectedTeam, selectedConference, tvNotScheduled } }
+                week={weekNo}
+                weekYear={2020}
+              />
+            )
           )
-        )
-      }
-      <BackToTopButton />
+        }
+      </div>
+      <BackToTopButton year={year} />
     </Layout>
   )
 };

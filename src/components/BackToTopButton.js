@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
+import { navigate } from 'gatsby'
 
-const BackToTopButton = () => {
+const BackToTopButton = ({year}) => {
   const [showButton, setShowButton] = useState(false);
 
   useEffect(() => {
@@ -17,7 +18,7 @@ const BackToTopButton = () => {
   })
 
   const handleClick = () => {
-    window.scrollTo(0, 0);
+    navigate(`/${year}`)
   };
 
   return (

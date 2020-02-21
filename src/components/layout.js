@@ -26,10 +26,10 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header siteTitle={data.site.siteMetadata.title} />
-      <div className="mx-4 my-2 font-opensans">
+      <div className="font-opensans">
         <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}
+        <footer className="px-2 py-1 bg-gray-800 text-gray-100 text-sm">
+          © {new Date().getFullYear()}, cfbtv.guide
         </footer>
       </div>
     </>

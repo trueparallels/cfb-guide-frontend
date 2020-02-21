@@ -28,11 +28,11 @@ const Filters = (props) => {
   }
 
   return (
-    <div className="border border-green-400 px-3 py-2 rounded bg-green-200">
+    <div className="px-3 py-2 bg-green-600 text-green-100">
       <div className="flex flex-wrap justify-between">
         <div className="mr-4 flex flex-wrap justify-start items-center py-2 mx-1">
           <label htmlFor="filter-networks" className="font-bold mr-2">Networks:</label>
-          <select name="filter-networks" onChange={handleNetwork} onBlur={handleNetwork} defaultValue={`-- All --`} className="appearance-none border bg-white">
+          <select name="filter-networks" onChange={handleNetwork} onBlur={handleNetwork} defaultValue={`-- All --`} className="appearance-none border bg-white text-black">
             {
               filteredNetworks.map(network => (
                 <option key={network} value={network}>{network}</option>
@@ -53,7 +53,7 @@ const Filters = (props) => {
 
         <div className="flex flex-wrap justify-start items-center py-2 mx-1">
           <label htmlFor="teams" className="font-bold mr-2">Team:</label>
-          <select onChange={handleTeam} onBlur={handleTeam} name="teams" className="appearance-none border bg-white">
+          <select onChange={handleTeam} onBlur={handleTeam} name="teams" className="appearance-none border bg-white text-black">
             {
               teams.map((team) => (
                 <option key={team.id} value={team.id}>{ team.displayName }</option>
@@ -64,7 +64,7 @@ const Filters = (props) => {
 
         <div className="flex flex-wrap justify-start items-center py-2 mx-1">
           <label htmlFor="conferences" className="font-bold mr-2">Conference:</label>
-          <select onChange={handleConference} onBlur={handleConference} name="conferences" className="appearance-none border bg-white">
+          <select onChange={handleConference} onBlur={handleConference} name="conferences" className="appearance-none border bg-white text-black">
             {
               filteredConferences.map((conference) => (
                 <option key={conference.id} value={conference.id}>{ conference.name }</option>
