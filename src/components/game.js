@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'gatsby'
 
 import Final from './final'
 import TeamImage from './TeamImage'
@@ -65,27 +64,25 @@ const Game = ({game}) => {
             }
           </div>
           <div className="flex flex-col min-w-full sm:min-w-40">
-            <Link>
-              <div className="text-center text-base sm:text-xl mb-3 font-raleway">{`${visitor} ${isNeutralSite ? 'vs.' : 'at'} ${home}`}</div>
-              <div className="text-center text-sm sm:text-lg font-raleway font-extrabold">{ gameTime }</div>
-              <div className="text-center text-sm sm:text-base">{ `${gameDayOfWeek} ${gameDate ? gameDate : ''}` }</div>
-              <div className="text-center text-base sm:text-xl font-raleway">{ network }</div>
-              {
-                teamsDefined ?
-                  <div className="text-center text-sm sm:text-base">{ `${getTeamConferenceName(visitorTeam)} vs. ${getTeamConferenceName(homeTeam)}` }</div>
-                  : null
-              }
-              {
-                teamsDefined ?
-                  <div className="text-center text-sm sm:text-base">{ isConferenceGame(game) ? 'Conference' : 'Non-Con' }</div> 
-                  : null
-              }
-              {
-                headline ?
-                  <div className="text-center text-base sm:text-md mt-3 font-raleway">{ headline }</div>
-                  : null
-              }
-            </Link>
+            <div className="text-center text-base sm:text-xl mb-3 font-raleway">{`${visitor} ${isNeutralSite ? 'vs.' : 'at'} ${home}`}</div>
+            <div className="text-center text-sm sm:text-lg font-raleway font-extrabold">{ gameTime }</div>
+            <div className="text-center text-sm sm:text-base">{ `${gameDayOfWeek} ${gameDate ? gameDate : ''}` }</div>
+            <div className="text-center text-base sm:text-xl font-raleway">{ network }</div>
+            {
+              teamsDefined ?
+                <div className="text-center text-sm sm:text-base">{ `${getTeamConferenceName(visitorTeam)} vs. ${getTeamConferenceName(homeTeam)}` }</div>
+                : null
+            }
+            {
+              teamsDefined ?
+                <div className="text-center text-sm sm:text-base">{ isConferenceGame(game) ? 'Conference' : 'Non-Con' }</div> 
+                : null
+            }
+            {
+              headline ?
+                <div className="text-center text-base sm:text-md mt-3 font-raleway">{ headline }</div>
+                : null
+            }
           </div>
         </div>
       </div>

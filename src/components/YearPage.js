@@ -10,11 +10,11 @@ import GameWeek from "./gameweek"
 import BackToTopButton from "./BackToTopButton"
 
 import { isFCSTeam, sortTeamsByName } from '../utils/team-utils'
-import { allGamesFinalForWeek, groupGamesByWeek } from '../utils/game-utils'
+import { allGamesFinalForWeek, groupGamesByWeek, weekNumber } from '../utils/game-utils'
 
 const YearPage = (props) => {
   const { pageContext } = props
-  const { games } = pageContext;
+  const { games, year } = pageContext;
   
   const data = useStaticQuery(graphql`
     query YearPageQuery {
@@ -46,9 +46,7 @@ const YearPage = (props) => {
 
   const gamesGroupedByWeek = groupGamesByWeek(games)
   const allWeeksKeys = Object.keys(gamesGroupedByWeek)
-  const weekData = []
-  
-  const weekNumber = x => (Number(x.split('-')[1]));
+
   allWeeksKeys.sort((a, b) => {
     return weekNumber(a) - weekNumber(b)
   });
@@ -67,7 +65,7 @@ const YearPage = (props) => {
   return (
     <Layout>
       <SEO title="CFB Guide" />
-      <JumpToWeek weeks={weekData.map(week => week.fieldValue)} />
+      <JumpToWeek weeks={allWeeksKeys} year={year} />
       <Filters
         networks={networks}
         teams={fbsTeams}

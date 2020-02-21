@@ -2,14 +2,14 @@ import React from 'react'
 import { getWeekName } from '../utils/game-utils'
 
 const JumpToWeek = (props) => {
-  const { weeks } = props;
+  const { weeks, year } = props;
 
   return (
     <div className="flex flex-wrap border border-green-400 bg-green-200 my-5 px-5 py-4">
       <div className="w-full font-bold">Jump To:</div>
       {
         weeks.map(week => {
-          const weekNumber = week.replace('2019-', '')
+          const weekNumber = week.replace(`${year}-`, '')
           const weekTitle = getWeekName(weekNumber);
 
           return (

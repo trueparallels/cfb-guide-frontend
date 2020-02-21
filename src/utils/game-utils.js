@@ -11,6 +11,7 @@ export const getHomeTeamConferenceId = compose(getHomeTeamConferenceLens, lensPa
 export const getVisitorTeamConferenceId = compose(getVisitorTeamConferenceLens, lensPath(['id']))
 export const getHomeTeamLocation = view(compose(homeTeamLens, lensPath(['location'])))
 export const getVisitorTeamLocation = view(compose(visitorTeamLens, lensPath(['location'])))
+export const weekNumber = gameWeekYear => (Number(gameWeekYear.split('-')[1]))
 
 export const isConferenceGame = pipe(
   juxt([view(getHomeTeamConferenceId), view(getVisitorTeamConferenceId)]),
