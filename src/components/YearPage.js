@@ -89,7 +89,7 @@ const YearPage = (props) => {
                 gamesForWeek={gamesGroupedByWeek[weekNo]}
                 filters={ { selectedNetwork, confGamesOnly, selectedTeam, selectedConference, tvNotScheduled } }
                 week={weekNo}
-                weekYear={2020}
+                weekYear={year}
               />
 
             )
@@ -102,7 +102,7 @@ const YearPage = (props) => {
                 gamesForWeek={gamesGroupedByWeek[weekNo]}
                 filters={ { selectedNetwork, confGamesOnly, selectedTeam, selectedConference, tvNotScheduled } }
                 week={weekNo}
-                weekYear={2020}
+                weekYear={year}
               />
             )
           )
