@@ -14,7 +14,7 @@ const GameWeek = (props) => {
   const { week, gamesForWeek, filters } = props;
   const { selectedNetwork, confGamesOnly, selectedTeam, selectedConference, tvNotScheduled } = filters;
 
-  const games = map(prop('node'), gamesForWeek);
+  const games = gamesForWeek
 
   const isHomeTeam = pathEq(['context', 'homeTeam', 'id'], selectedTeam)
   const isVisitorTeam = pathEq(['context', 'visitorTeam', 'id'], selectedTeam)
@@ -92,6 +92,12 @@ const GameWeek = (props) => {
   const noGamesFinal = equals(0, completedGames.length)
   const allGamesFinal = equals(games.length, completedGames.length)
 
+  // return (
+  //   <div>
+  //     <span>{`Week ${week}: ${filteredGamesForWeek.length}`}</span>
+  //   </div>
+  // )
+
   return (
     <div className="max-w-5xl mx-auto my-6">
       <a href={`#week-${week}`} name={`week-${week}`}>
@@ -108,7 +114,7 @@ const GameWeek = (props) => {
       <div className={`flex flex-wrap justify-center ${showGames ? '' : 'hidden'}`}>
         {
           filteredCompletedGames.map((game) => (
-            <Final key={game.context.gameId} game={game.context} home={game.context.homeTeam} visitor={game.context.visitorTeam} />
+            <Final key={game.gameId} game={game.context} home={game.homeTeam} visitor={game.visitorTeam} />
           ))
         }
       </div>
@@ -121,9 +127,10 @@ const GameWeek = (props) => {
       <ul>
       {
         filteredGamesForWeek.map((game) => {
+          console.log(game)
           return (
-            <div key={game.context.gameId} className="my-4">
-              <Game pageContext={game.context} path={game.path} selectedNetwork={selectedNetwork} />
+            <div key={game.gameId} className="my-4">
+              <Game game={game} selectedNetwork={selectedNetwork} />
             </div>
           );
         })

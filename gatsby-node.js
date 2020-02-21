@@ -2,11 +2,11 @@ const R = require('ramda')
 const path = require(`path`)
 
 exports.createPages = async ({actions, graphql}) => {
-  const weekQuery = async (week) => {
+  const allGamesQuery = async (year) => {
     return await graphql(`
     {
       cfbApi {
-        byWeek(week: "2019-${week}") {
+        allGamesByYear(year: "${year}") {
           gameId
           gameWeekYear
           date
@@ -51,78 +51,30 @@ exports.createPages = async ({actions, graphql}) => {
     `)
   }
 
-  const conferenceQuery = async () => {
-    return await graphql(`
-      {
-        cfbApi {
-          conference {
-            id
-            name
-          }
-        }
-      }
-    `);
-  }
+  const years = R.range(2019, new Date().getFullYear() + 1)
 
-  const networkQuery = async () => {
-    return await graphql(`
-      {
-        cfbApi {
-          networks {
-            name
-          }
-        }
-      }
-    `);
-  };
-
-  const weeks = R.range(1,17)
-  const networksData = await networkQuery()
-  console.log(networksData)
-  const networks = networksData.data.cfbApi.networks.map(n => n.name)
-  console.log(networks)
-
-  const allWeeks = Promise.all(
-    R.map(weekQuery)(weeks)
+  const allYears = Promise.all(
+    R.map(allGamesQuery)(years)
   )
 
-  const getGameYear = R.pipe(R.split('-'), R.nth(0));
-  const getGameWeek = R.pipe(R.split('-'), R.nth(1));
-  const padGameWeek = R.ifElse(x => Number(getGameWeek(x)) < 10, x => R.concat('week-0', getGameWeek(x)), x => R.concat('week-', getGameWeek(x)));
+  const getGameYear = R.pipe(R.split('-'), R.nth(0))
+  const getGameWeek = R.pipe(R.split('-'), R.nth(1))
+  const padGameWeek = R.ifElse(x => Number(getGameWeek(x)) < 10, x => R.concat('week-0', getGameWeek(x)), x => R.concat('week-', getGameWeek(x)))
 
-  return allWeeks.then((data) => {
+  return allYears.then((data) => {
     data.forEach(item => {
-      // console.log(item.data.cfbApi.byWeek)
-      const gamesByWeek = item.data.cfbApi.byWeek
-      console.log(item)
-      console.log(gamesByWeek[0].gameWeekYear, gamesByWeek.length)
+      const gamesByYear = item.data.cfbApi.allGamesByYear
+      const sampleGame = gamesByYear[0].gameWeekYear
 
       actions.createPage({
-        path: `/${getGameYear(gamesByWeek[0].gameWeekYear)}/${padGameWeek(gamesByWeek[0].gameWeekYear)}`,
-        component: path.resolve('src/components/GameWeekPage.js'),
+        path: `${getGameYear(sampleGame)}`,
+        component: path.resolve('src/components/YearPage.js'),
         context: {
-          //games: gamesByWeek,
-          contentType: 'week',
-          week: getGameWeek(gamesByWeek[0].gameWeekYear),
-          gameWeekYear: gamesByWeek[0].gameWeekYear,
-          networks
+          games: gamesByYear,
+          contentType: 'year',
+          year: getGameYear(sampleGame),
         }
-      });
-
-      item.data.cfbApi.byWeek.forEach((game) => {
-        const context = {
-          ...game,
-          contentType: 'game',
-          week: getGameWeek(game.gameWeekYear),
-          networks
-        }
-
-        actions.createPage({
-          path: `/${getGameYear(game.gameWeekYear)}/${padGameWeek(game.gameWeekYear)}/${game.gameId}`,
-          component: path.resolve('src/components/game.js'),
-          context
-        })
       })
-    });
-  });
-};
+    })
+  })
+}

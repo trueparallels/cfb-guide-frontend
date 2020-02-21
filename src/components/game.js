@@ -26,7 +26,7 @@ const formatGameDate = (date) => {
   }).format(date);
 };
 
-const Game = ({path, pageContext: game}) => {
+const Game = ({game}) => {
   const { gameId, date, home, visitor, homeAbbreviation, visitorAbbreviation, isNeutralSite, homeTeam, visitorTeam, network, headline } = game;
 
   const gameDateAndTime = date ? formatGameDate(new Date(date)) : 'TBD'
@@ -65,7 +65,7 @@ const Game = ({path, pageContext: game}) => {
             }
           </div>
           <div className="flex flex-col min-w-full sm:min-w-40">
-            <Link to={path}>
+            <Link>
               <div className="text-center text-base sm:text-xl mb-3 font-raleway">{`${visitor} ${isNeutralSite ? 'vs.' : 'at'} ${home}`}</div>
               <div className="text-center text-sm sm:text-lg font-raleway font-extrabold">{ gameTime }</div>
               <div className="text-center text-sm sm:text-base">{ `${gameDayOfWeek} ${gameDate ? gameDate : ''}` }</div>

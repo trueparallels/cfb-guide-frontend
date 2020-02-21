@@ -1,5 +1,4 @@
 import React from 'react'
-import { graphql } from 'gatsby';
 
 import Layout from "./layout";
 import SEO from "./seo";
@@ -28,59 +27,5 @@ const GameWeekPage = (props) => {
     </Layout>
   )
 };
-
-export const query = graphql`
-query GameWeekQuery($gameWeekYear: String) {
-  allSitePage(sort:{
-    fields: [context___date],
-    order: [ASC]
-  }, filter: {
-    context: { gameWeekYear: { eq: $gameWeekYear }, gameId: { ne: null}}
-  }) {
-    edges {
-      node {
-        path
-        context {
-          gameId
-          gameWeekYear
-          date
-          network
-          home
-          visitor
-          homeAbbreviation
-          visitorAbbreviation
-          isNeutralSite
-          homeTeam {
-            id
-            abbreviation
-            alternateColor
-            color
-            displayName
-            location
-            name
-            conference {
-              id
-              name
-            }
-          }
-          visitorTeam {
-            id
-            abbreviation
-            alternateColor
-            color
-            displayName
-            location
-            name
-            conference {
-              id
-              name
-            }
-          }
-        }
-      }
-    }
-  }
-}
-`;
 
 export default GameWeekPage;

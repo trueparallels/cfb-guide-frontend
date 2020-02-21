@@ -31,58 +31,11 @@ const IndexPage = () => {
           name
         }
       }
-      allSitePage(sort:{
-        fields: [context___gameWeekYear, context___date],
-        order: [ASC, ASC]
-      }, filter: {
-        context: { gameId: { ne: null }}
-      }) {
-        group(field: context___gameWeekYear) {
-          fieldValue
-          edges {
-            node {
-              path
-              context {
-                gameId
-                gameWeekYear
-                date
-                network
-                headline
-                home
-                homeFinalScore
-                visitor
-                visitorFinalScore
-                homeAbbreviation
-                visitorAbbreviation
-                isNeutralSite
-                homeTeam {
-                  id
-                  abbreviation
-                  alternateColor
-                  color
-                  displayName
-                  location
-                  name
-                  conference {
-                    id
-                    name
-                  }
-                }
-                visitorTeam {
-                  id
-                  abbreviation
-                  alternateColor
-                  color
-                  displayName
-                  location
-                  name
-                  conference {
-                    id
-                    name
-                  }
-                }
-              }
-            }
+      allSitePage(sort: {fields: context___year}, filter: {context: {contentType: {eq: "year"}}}) {
+        nodes {
+          context {
+            contentType
+            year
           }
         }
       }
