@@ -58,8 +58,6 @@ exports.createPages = async ({actions, graphql}) => {
   )
 
   const getGameYear = R.pipe(R.split('-'), R.nth(0))
-  const getGameWeek = R.pipe(R.split('-'), R.nth(1))
-  const padGameWeek = R.ifElse(x => Number(getGameWeek(x)) < 10, x => R.concat('week-0', getGameWeek(x)), x => R.concat('week-', getGameWeek(x)))
 
   return allYears.then((data) => {
     data.forEach(item => {

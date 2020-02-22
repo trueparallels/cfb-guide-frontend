@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { prop, pathEq, filter, ifElse, identity, equals, T, isNil, not, and, pipe, anyPass } from 'ramda';
+import { pathEq, filter, ifElse, identity, equals, T, isNil, not, and, pipe, anyPass } from 'ramda';
 
 import { isConferenceGame, isFinal, getWeekName, weekNumber } from '../utils/game-utils'
 

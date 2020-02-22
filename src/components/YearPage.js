@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { reject, prepend } from 'ramda'
-import { useStaticQuery, graphql, navigate } from 'gatsby'
+import { reject, prepend, prop } from 'ramda'
+import { graphql, navigate } from 'gatsby'
 
 import Layout from "./layout"
 import SEO from "./seo"
@@ -13,28 +13,8 @@ import { isFCSTeam, sortTeamsByName } from '../utils/team-utils'
 import { allGamesFinalForWeek, groupGamesByWeek, weekNumber } from '../utils/game-utils'
 
 const YearPage = (props) => {
-  const { pageContext } = props
-  const { games, year } = pageContext;
-  
-  const data = useStaticQuery(graphql`
-    query YearPageQuery {
-      cfbApi {
-        networks {
-          name
-        }
-        teams {
-          id
-          displayName
-          conference {
-            name
-          }
-        }
-        conference {
-          id
-          name
-        }
-      }
-    }`)
+  const { pageContext, data } = props
+  const { year, games } = pageContext;
 
   const { conference: conferencesFromQuery, teams: teamsFromQuery, networks: networksFromQuery } = data.cfbApi
 
@@ -55,8 +35,6 @@ const YearPage = (props) => {
   allWeeksKeys.sort((a, b) => {
     return weekNumber(a) - weekNumber(b)
   });
-
-  // allWeeksKeys.forEach(x => (console.log(gamesGroupedByWeek[x])))
 
   const conferences = conferencesFromQuery.sort((a, b) => a.name.localeCompare(b.name));
   const networks = networksFromQuery.map(n => n.name).sort();
@@ -112,5 +90,26 @@ const YearPage = (props) => {
     </Layout>
   )
 };
+
+export const query = graphql`
+  query {
+      cfbApi {
+        networks {
+          name
+        }
+        teams {
+          id
+          displayName
+          conference {
+            name
+          }
+        }
+        conference {
+          id
+          name
+        }
+      }
+    }
+`
 
 export default YearPage;
