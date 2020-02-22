@@ -16,14 +16,14 @@ const GameWeek = (props) => {
 
   const games = gamesForWeek
 
-  const isHomeTeam = pathEq(['context', 'homeTeam', 'id'], selectedTeam)
-  const isVisitorTeam = pathEq(['context', 'visitorTeam', 'id'], selectedTeam)
-  const isSelectedNetwork = pathEq(['context', 'network'], selectedNetwork);
+  const isHomeTeam = pathEq(['homeTeam', 'id'], selectedTeam)
+  const isVisitorTeam = pathEq(['visitorTeam', 'id'], selectedTeam)
+  const isSelectedNetwork = pathEq(['network'], selectedNetwork);
   const isTeamInGame = anyPass([isHomeTeam, isVisitorTeam])
-  const isHomeTeamInConference = pathEq(['context', 'homeTeam', 'conference', 'id'], selectedConference)
-  const isVisitorTeamInConference = pathEq(['context', 'visitorTeam', 'conference', 'id'], selectedConference)
+  const isHomeTeamInConference = pathEq(['homeTeam', 'conference', 'id'], selectedConference)
+  const isVisitorTeamInConference = pathEq(['visitorTeam', 'conference', 'id'], selectedConference)
   const isConferenceInGame = anyPass([isHomeTeamInConference, isVisitorTeamInConference])
-  const isTvNotScheduledForGame = pathEq(['context', 'network'], null)
+  const isTvNotScheduledForGame = pathEq(['network'], null)
 
   const isAnyConferenceSelected = () => and(not(isNil(selectedConference)), not(equals(selectedConference, '-- All --')))
   const isAnyNetworkSelected = () => not(equals(selectedNetwork, '-- All --'));
@@ -48,12 +48,7 @@ const GameWeek = (props) => {
 
   const filterGamesForConferenceOnly = ifElse(
     isConfGameOnlySelected,
-    filter(
-      pipe(
-        prop('context'),
-        isConferenceGame
-      )
-    ),
+    filter(isConferenceGame),
     identity
   );
 
