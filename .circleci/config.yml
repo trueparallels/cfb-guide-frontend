@@ -14,12 +14,12 @@ workflows:
     build-and-deploy-staging:
       jobs:
         - build-frontend-assets
-          filters:
-            branches:
-              only: develop
+            filters:
+              branches:
+                only: develop
     build-and-deploy-production:
       jobs:
         - build-frontend-assets
-          filters:
-            branches:
-              only: master
+            filters:
+              branches:
+                only: master
