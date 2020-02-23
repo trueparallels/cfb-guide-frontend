@@ -9,6 +9,7 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
+            - run: npm install
             - run: gatsby build
 workflows:
     build-and-deploy-staging:
