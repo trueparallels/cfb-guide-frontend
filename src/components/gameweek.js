@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { pathEq, filter, ifElse, identity, equals, T, isNil, not, and, pipe, anyPass } from 'ramda';
+import React, { useState, useMemo } from 'react';
+import { pathEq, filter, ifElse, identity, equals, T, isNil, not, and, pipe, anyPass, sortBy, prop } from 'ramda';
 
 import { isConferenceGame, isFinal, getWeekName, weekNumber } from '../utils/game-utils'
 
@@ -14,7 +14,7 @@ const GameWeek = (props) => {
   const { week, gamesForWeek, filters } = props;
   const { selectedNetwork, confGamesOnly, selectedTeam, selectedConference, tvNotScheduled } = filters;
 
-  const games = gamesForWeek
+  const games = useMemo(() => sortBy(prop('date'), gamesForWeek), [gamesForWeek])
 
   const isHomeTeam = pathEq(['homeTeam', 'id'], selectedTeam)
   const isVisitorTeam = pathEq(['visitorTeam', 'id'], selectedTeam)
@@ -82,12 +82,6 @@ const GameWeek = (props) => {
 
   const noGamesFinal = equals(0, completedGames.length)
   const allGamesFinal = equals(games.length, completedGames.length)
-
-  // return (
-  //   <div>
-  //     <span>{`Week ${week}: ${filteredGamesForWeek.length}`}</span>
-  //   </div>
-  // )
 
   return (
     <div className="max-w-5xl mx-auto my-6">
