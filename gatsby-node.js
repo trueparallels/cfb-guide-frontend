@@ -64,7 +64,12 @@ exports.createPages = async ({actions, graphql}) => {
     data.forEach(item => {
       const gamesByYear = item.data.cfbApi.allGamesByYear
       if (!gamesByYear) {
-        throw 'Error accessing games data'
+        const { errors } = item
+
+        const errorMap = R.map(err => R.prop('message', err), errors)
+        const errorMsg = R.join("; ", errorMap)
+
+        throw `Error accessing games data: ${errorMsg}`
       }
       const sampleGame = gamesByYear[0].gameWeekYear
 
