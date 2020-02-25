@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Final from './final'
-import TeamImage from './TeamImage'
+import TeamImage from './teamimage'
 
 
 import {

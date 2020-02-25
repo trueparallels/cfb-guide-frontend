@@ -5,9 +5,9 @@ import { graphql, navigate } from 'gatsby'
 import Layout from "./layout"
 import SEO from "./seo"
 import Filters from "./filters"
-import JumpToWeek from "./JumpToWeek"
+import JumpToWeek from "./jumptoweek"
 import GameWeek from "./gameweek"
-import BackToTopButton from "./BackToTopButton"
+import BackToTopButton from "./backtotopbutton"
 
 import { isFCSTeam, sortTeamsByName } from '../utils/team-utils'
 import { allGamesFinalForWeek, groupGamesByWeek, weekNumber } from '../utils/game-utils'
