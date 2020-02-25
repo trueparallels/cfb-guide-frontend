@@ -24,15 +24,13 @@ const Layout = ({ children }) => {
   `)
 
   return (
-    <>
+    <div className="min-h-screen font-opensans flex flex-col">
       <Header siteTitle={data.site.siteMetadata.title} />
-      <div className="font-opensans">
-        <main>{children}</main>
-        <footer className="px-2 py-1 bg-gray-800 text-gray-100 text-sm">
-          © {new Date().getFullYear()}, cfbtv.guide
-        </footer>
-      </div>
-    </>
+      <main className="flex-grow">{children}</main>
+      <footer className="px-2 py-1 bg-gray-800 text-gray-100 text-sm">
+        © {new Date().getFullYear()}, cfbtv.guide
+      </footer>
+    </div>
   )
 }
 
