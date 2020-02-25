@@ -31,7 +31,7 @@ module.exports = {
       options: {
         typeName: `CFB_API`,
         fieldName: `cfbApi`,
-        url: `http://localhost:3003/graphql`,
+        url: process.env.GRAPHQL_API_URL || `http://localhost:3003/graphql`,
         refetchInterval: 60*60*2
       }
     }

@@ -63,6 +63,9 @@ exports.createPages = async ({actions, graphql}) => {
   return allYears.then((data) => {
     data.forEach(item => {
       const gamesByYear = item.data.cfbApi.allGamesByYear
+      if (!gamesByYear) {
+        throw 'Error accessing games data'
+      }
       const sampleGame = gamesByYear[0].gameWeekYear
 
       actions.createPage({
