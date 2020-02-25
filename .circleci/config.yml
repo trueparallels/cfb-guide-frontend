@@ -55,6 +55,8 @@ workflows:
               branches:
                 only: develop
         - deploy-to-s3-staging:
+            requires:
+              - build-frontend-assets
             filters:
               branches:
                 only: develop
@@ -65,6 +67,8 @@ workflows:
               branches:
                 only: master
         - deploy-to-s3-production:
+            requires:
+              - build-frontend-assets
             filters:
               branches:
                 only: master
