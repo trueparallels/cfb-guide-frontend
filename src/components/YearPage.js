@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { reject, prepend, prop } from 'ramda'
+import { reject, prepend } from 'ramda'
 import { graphql, navigate } from 'gatsby'
 
 import Layout from "./layout"
