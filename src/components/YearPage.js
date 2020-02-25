@@ -14,15 +14,15 @@ import { allGamesFinalForWeek, groupGamesByWeek, weekNumber } from '../utils/gam
 
 const YearPage = (props) => {
   const { pageContext, data } = props
-  const { year, games } = pageContext;
+  const { year, games } = pageContext
 
   const { conference: conferencesFromQuery, teams: teamsFromQuery, networks: networksFromQuery } = data.cfbApi
 
-  const [selectedNetwork, setSelectedNetwork] = useState('-- All --');
-  const [confGamesOnly, setConfGamesOnly] = useState(false);
-  const [tvNotScheduled, setTvNotScheduled] = useState(false);
-  const [selectedTeam, setSelectedTeam] = useState(null);
-  const [selectedConference, setSelectedConference] = useState(null);
+  const [selectedNetwork, setSelectedNetwork] = useState('-- All --')
+  const [confGamesOnly, setConfGamesOnly] = useState(false)
+  const [tvNotScheduled, setTvNotScheduled] = useState(false)
+  const [selectedTeam, setSelectedTeam] = useState(null)
+  const [selectedConference, setSelectedConference] = useState(null)
   const [selectedWeek, setSelectedWeek] = useState(null)
 
   if (selectedWeek) {
@@ -34,14 +34,12 @@ const YearPage = (props) => {
 
   allWeeksKeys.sort((a, b) => {
     return weekNumber(a) - weekNumber(b)
-  });
+  })
 
-  const conferences = conferencesFromQuery.sort((a, b) => a.name.localeCompare(b.name));
-  const networks = networksFromQuery.map(n => n.name).sort();
-  const fbsTeams = prepend({ id: null, displayName: '-- All Teams --'}, sortTeamsByName(reject(isFCSTeam, teamsFromQuery)));
+  const conferences = conferencesFromQuery.sort((a, b) => a.name.localeCompare(b.name))
+  const networks = networksFromQuery.map(n => n.name).sort()
+  const fbsTeams = prepend({ id: null, displayName: '-- All Teams --'}, sortTeamsByName(reject(isFCSTeam, teamsFromQuery)))
 
-  // const finishedWeeks = weekData.filter(w => allGamesFinalForWeek(w))
-  // const incompleteWeeks = weekData.filter(w => !allGamesFinalForWeek(w))
   const finishedWeeks = allWeeksKeys.filter(w => allGamesFinalForWeek(gamesGroupedByWeek[w]))
   const incompleteWeeks = allWeeksKeys.filter(w => !allGamesFinalForWeek(gamesGroupedByWeek[w]))
 
@@ -89,7 +87,7 @@ const YearPage = (props) => {
       <BackToTopButton year={year} />
     </Layout>
   )
-};
+}
 
 export const query = graphql`
   query {
@@ -112,4 +110,4 @@ export const query = graphql`
     }
 `
 
-export default YearPage;
+export default YearPage
