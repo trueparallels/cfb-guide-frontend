@@ -46,17 +46,19 @@ const IndexPage = () => {
           <div>
             <span className="text-3xl font-bold">Seasons</span>
           </div>
-          {
-            years && years.map(year => (
-              <ul>
-                <li key={year}>
-                  <Link to={`/${year}`}>
-                    <span className="text-2xl">{year}</span>
-                  </Link>
-                </li>
-              </ul>
-            ))
-          }
+          <div>
+            <ul>
+              {
+                years && years.map(year => (
+                    <li key={year}>
+                      <Link to={`/${year}`}>
+                        <span className="text-2xl">{year}</span>
+                      </Link>
+                    </li>
+                ))
+              }
+            </ul>
+          </div>
         </div>
         
       </Layout>
