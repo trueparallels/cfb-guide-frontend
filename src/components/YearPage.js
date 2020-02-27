@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { reject, prepend } from 'ramda'
-import { graphql, navigate } from 'gatsby'
+import { graphql } from 'gatsby'
+import scrollTo from 'gatsby-plugin-smoothscroll'
 
 import Layout from "./layout"
 import SEO from "./seo"
@@ -25,8 +26,16 @@ const YearPage = (props) => {
   const [selectedConference, setSelectedConference] = useState(null)
   const [selectedWeek, setSelectedWeek] = useState(null)
 
-  if (selectedWeek) {
-    navigate(selectedWeek)
+  const handleSelectedWeek = (value) => {
+    if (value && value !== selectedWeek) {
+      setSelectedWeek(value)
+      scrollTo(value)
+    }
+  }
+
+  const handleBackToTop = (event) => {
+    setSelectedWeek(null)
+    window.scrollTo(0,0)
   }
 
   const gamesGroupedByWeek = groupGamesByWeek(games)
@@ -56,7 +65,7 @@ const YearPage = (props) => {
         setSelectedConference={setSelectedConference}
         setTvNotScheduled={setTvNotScheduled}
       />
-      <JumpToWeek weeks={allWeeksKeys} year={year} setSelectedWeek={setSelectedWeek} />
+      <JumpToWeek weeks={allWeeksKeys} year={year} handleSelectedWeek={handleSelectedWeek} />
       <div className="mx-4">
         {
           finishedWeeks.map((weekNo) => (
@@ -84,7 +93,7 @@ const YearPage = (props) => {
           )
         }
       </div>
-      <BackToTopButton year={year} />
+      <BackToTopButton handleBackToTop={handleBackToTop} />
     </Layout>
   )
 }

@@ -44,7 +44,7 @@ const IndexPage = () => {
         <SEO title="CFB Guide" />
         <div className="my-3 mx-2">
           <div>
-            <span className="text-3xl font-bold">Seasons</span>
+            <span className="text-3xl font-bold">&nbsp;</span>
           </div>
           <div>
             <ul>
@@ -59,8 +59,7 @@ const IndexPage = () => {
               }
             </ul>
           </div>
-        </div>
-        
+        </div>        
       </Layout>
     )
   } catch {

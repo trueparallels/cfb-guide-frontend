@@ -85,7 +85,7 @@ const GameWeek = (props) => {
 
   return (
     <div className="max-w-5xl mx-auto my-6">
-      <a href={`#week-${week}`} name={`week-${week}`}>
+      <a href={`#week-${week}`} id={`week-${week}`}>
         <h2 className="font-raleway text-2xl md:text-3xl">{ getWeekName(weekNumber(week)) }</h2>
       </a>
       <div className={`flex items-center justify-between border border-gray-300 px-4 py-3 rounded ${noGamesFinal ? 'hidden' : ''}`}>
