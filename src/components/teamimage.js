@@ -11,10 +11,6 @@ const TeamImage = (props) => {
     return (
       <div></div>
     )
-  } else {
-    return (
-      <div></div>
-    )
   }
 
   if (isSmall) {
