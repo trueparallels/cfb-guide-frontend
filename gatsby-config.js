@@ -5,6 +5,8 @@ module.exports = {
     author: `@trueparallels`,
   },
   plugins: [
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-postcss`,
     `gatsby-plugin-smoothscroll`,

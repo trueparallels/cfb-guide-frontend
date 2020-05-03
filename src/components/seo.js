@@ -69,7 +69,6 @@ function SEO({ description, lang, meta, title }) {
         },
       ].concat(meta)}
     >
-      <link href={`https://fonts.googleapis.com/css?family=Open+Sans|Raleway:800&display=swap`} rel="preconnect" />
     </Helmet>
   )
 }
