@@ -44,7 +44,7 @@ jobs:
           name: Install AWS CLI
           command: sudo pip install awscli
       - run:
-          name: Deploy to S3 (staging)
+          name: Deploy to S3 (production)
           command: aws s3 sync ~/repo/public s3://cfb-guide-prod/ --delete --acl public-read
 
 workflows:
