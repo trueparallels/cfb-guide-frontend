@@ -1,0 +1,74 @@
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  build-frontend-assets:
+    executor:
+      name: node/default
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: yarn install
+            - run: yarn build
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - public
+  deploy-to-s3-staging:
+    docker:
+      - image: circleci/python:3.7-stretch
+
+    working_directory: ~/repo
+
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Install AWS CLI
+          command: sudo pip install awscli
+      - run:
+          name: Deploy to S3 (staging)
+          command: aws s3 sync ~/repo/public s3://cfb-guide-staging/ --delete --acl public-read
+  deploy-to-s3-production:
+    docker:
+      - image: circleci/python:3.7-stretch
+
+    working_directory: ~/repo
+
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Install AWS CLI
+          command: sudo pip install awscli
+      - run:
+          name: Deploy to S3 (staging)
+          command: aws s3 sync ~/repo/public s3://cfb-guide-prod/ --delete --acl public-read
+
+workflows:
+    build-and-deploy-staging:
+      jobs:
+        - build-frontend-assets:
+            filters:
+              branches:
+                only: develop
+        - deploy-to-s3-staging:
+            requires:
+              - build-frontend-assets
+            filters:
+              branches:
+                only: develop
+    build-and-deploy-production:
+      jobs:
+        - build-frontend-assets:
+            filters:
+              branches:
+                only: master
+        - deploy-to-s3-production:
+            requires:
+              - build-frontend-assets
+            filters:
+              branches:
+                only: master

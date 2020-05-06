@@ -2,6 +2,34 @@ const R = require('ramda')
 const path = require(`path`)
 
 exports.createPages = async ({actions, graphql}) => {
+  // const teamImagesQuery = async () => {
+  //   return await graphql(`
+  //     {
+  //       allFile(filter: {relativePath: {glob: "**/teams/*.png"}}) {
+  //         edges {
+  //           node {
+  //             id
+  //             childImageSharp {
+  //               fixed(duotone: {highlight: "#f00e2e", shadow: "#192550"}, width: 80) {
+  //                 src
+  //                 originalName
+  //               }
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   `)
+  // }
+
+  // const teamImages = await teamImagesQuery()
+  // const firstTenImages = R.pipe(
+  //   R.path(['data', 'allFile', 'edges']),
+  //   R.take(10),
+  //   R.map(R.path(['node', 'childImageSharp', 'fixed']))
+  // )(teamImages)
+  // console.log(firstTenImages)
+
   const allGamesQuery = async (year) => {
     return await graphql(`
     {
@@ -10,6 +38,7 @@ exports.createPages = async ({actions, graphql}) => {
           gameId
           gameWeekYear
           date
+          dateIsValid
           network
           headline
           home
@@ -62,6 +91,14 @@ exports.createPages = async ({actions, graphql}) => {
   return allYears.then((data) => {
     data.forEach(item => {
       const gamesByYear = item.data.cfbApi.allGamesByYear
+      if (!gamesByYear) {
+        const { errors } = item
+
+        const errorMap = R.map(err => R.prop('message', err), errors)
+        const errorMsg = R.join("; ", errorMap)
+
+        throw `Error accessing games data: ${errorMsg}`
+      }
       const sampleGame = gamesByYear[0].gameWeekYear
 
       actions.createPage({

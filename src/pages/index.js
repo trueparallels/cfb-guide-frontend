@@ -1,16 +1,10 @@
-import React, { useState } from "react"
-import { useStaticQuery, graphql } from "gatsby"
-import { reject, prepend } from 'ramda'
+import React from "react"
+import { useStaticQuery, graphql, Link } from "gatsby"
 
 import Layout from "../components/layout"
-import Filters from "../components/filters"
-import JumpToWeek from "../components/JumpToWeek"
-import BackToTopButton from "../components/BackToTopButton"
 import SEO from "../components/seo"
-import GameWeek from "../components/gameweek"
 
-import { isFCSTeam, sortTeamsByName } from '../utils/team-utils'
-import { allGamesFinalForWeek } from '../utils/game-utils'
+import { getYearsDataFromStaticQuery } from '../utils/year-utils'
 
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
@@ -40,67 +34,39 @@ const IndexPage = () => {
         }
       }
     }
-  `);
+  `)
 
-  const [selectedNetwork, setSelectedNetwork] = useState('-- All --');
-  const [confGamesOnly, setConfGamesOnly] = useState(false);
-  const [tvNotScheduled, setTvNotScheduled] = useState(false);
-  const [selectedTeam, setSelectedTeam] = useState(null);
-  const [selectedConference, setSelectedConference] = useState(null);
+  try {
+    const years = getYearsDataFromStaticQuery(data)
 
-  const weekData = data.allSitePage.group;
-  const weekNumber = x => (Number(x.split('-')[1]));
-  weekData.sort((a, b) => {
-    return weekNumber(a.fieldValue) - weekNumber(b.fieldValue)
-  });
-
-  const conferences = data.cfbApi.conference.sort((a, b) => a.name.localeCompare(b.name));
-  const networks = data.cfbApi.networks.map(n => n.name).sort();
-  const fbsTeams = prepend({ id: null, displayName: '-- All Teams --'}, sortTeamsByName(reject(isFCSTeam, data.cfbApi.teams)));
-
-  const finishedWeeks = weekData.filter(w => allGamesFinalForWeek(w))
-  const incompleteWeeks = weekData.filter(w => !allGamesFinalForWeek(w))
-
-
-  return (
-    <Layout>
-      <SEO title="CFB Guide" />
-      <JumpToWeek weeks={weekData.map(week => week.fieldValue)} />
-      <Filters
-        networks={networks}
-        teams={fbsTeams}
-        conferences={conferences}
-        setNetwork={setSelectedNetwork}
-        setConfGamesOnly={setConfGamesOnly}
-        setSelectedTeam={setSelectedTeam}
-        setSelectedConference={setSelectedConference}
-        setTvNotScheduled={setTvNotScheduled}
-      />
-      {
-        finishedWeeks.map(({fieldValue, edges: gamesForWeek}) => (
-          <GameWeek
-            key={fieldValue}
-            gamesForWeek={gamesForWeek}
-            filters={ { selectedNetwork, confGamesOnly, selectedTeam, selectedConference, tvNotScheduled } }
-            week={weekNumber(fieldValue)}
-            weekYear={fieldValue}
-          />
-        ))
-      }
-      {
-        incompleteWeeks.map(({fieldValue, edges: gamesForWeek}) => (
-          <GameWeek
-            key={fieldValue}
-            gamesForWeek={gamesForWeek}
-            filters={ { selectedNetwork, confGamesOnly, selectedTeam, selectedConference, tvNotScheduled } }
-            week={weekNumber(fieldValue)}
-            weekYear={fieldValue}
-          />
-        ))
-      }
-      <BackToTopButton />
-    </Layout>
-  )
+    return (
+      <Layout>
+        <SEO title="CFB Guide" />
+        <div className="my-3 mx-2">
+          <div>
+            <span className="text-3xl font-bold">&nbsp;</span>
+          </div>
+          <div>
+            <ul>
+              {
+                years && years.map(year => (
+                    <li key={year}>
+                      <Link to={`/${year}`}>
+                        <span className="text-2xl">{year}</span>
+                      </Link>
+                    </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>        
+      </Layout>
+    )
+  } catch {
+    return (
+      <div>Oops ¯\_(ツ)_/¯</div>
+    )
+  }
 }
 
 export default IndexPage

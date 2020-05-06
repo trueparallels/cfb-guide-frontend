@@ -1,6 +1,6 @@
 import React from 'react'
 
-import TeamImage from './TeamImage';
+import TeamImage from './teamimage';
 
 import {
   visitorWinner,
