@@ -16,16 +16,20 @@ const TeamImage = (props) => {
 
   if (isSmall) {
     return (
-      <LazyLoad height={24} width={24} offset={1000} debounce={false}>
-        <img className="w-6 h-6 sm:w-10 sm:h-10" src={`https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/${teamId}.png&h=80`} alt={teamLocation} />
-      </LazyLoad>
+      <div className="lazy-load-wrapper lazy-load-small">
+        <LazyLoad offset={1000} debounce={false}>
+          <img className="w-6 h-6 sm:w-10 sm:h-10" src={`https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/${teamId}.png&h=80`} alt={teamLocation} />
+        </LazyLoad>
+      </div>
     )
   }
 
   return (
-    <LazyLoad height={80} width={80} offset={1000} debounce={false}>
-      <img src={`https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/${teamId}.png&h=80`} alt={teamLocation} />
-    </LazyLoad>
+    <div className="lazy-load-wrapper lazy-load-regular">
+      <LazyLoad offset={1000} debounce={false}>
+        <img src={`https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/${teamId}.png&h=80`} alt={teamLocation} />
+      </LazyLoad>
+    </div>
   )
 }
 

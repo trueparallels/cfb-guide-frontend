@@ -29,3 +29,19 @@ body {
     text-shadow: none;
   }
 }
+
+.lazy-load-regular > .LazyLoad {
+  height: 80px;
+}
+
+.lazy-load-small > .LazyLoad {
+  height: 24px;
+}
+
+.lazy-load-regular > .LazyLoad.is-visible {
+  height: auto;
+}
+
+.lazy-load-small > .LazyLoad.is-visible {
+  height: auto;
+}
